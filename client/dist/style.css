@@ -1,0 +1,23 @@
+h1 {
+  display:block;
+  text-align: center;
+  width:100%;
+  font-size: 60px;
+}
+
+.submit-button {
+  margin-left: 5px;
+}
+
+.info-header:hover {
+  cursor: pointer;
+}
+
+.info-header {
+  border: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  text-align: center;
+  width:100%;
+}
