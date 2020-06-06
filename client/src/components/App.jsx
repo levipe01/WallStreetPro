@@ -1,12 +1,16 @@
 import React from 'react';
 import Description from './Description.jsx'
 
+const axios = require('axios').default;
+const config = require('../../../config.js');
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      ticker: 'SPY',
+      ticker: 'AAPL',
       cName: '',
       desInfo: {}
     }
@@ -14,7 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/company?token=${config.app.api}`)
+    axios.get(`https://cloud.iexapis.com/stable/stock/${this.state.ticker}/company?token=${config.app.api}`)
     .then((response) => {
       console.log(response)
       this.setState({
