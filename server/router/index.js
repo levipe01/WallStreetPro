@@ -5,6 +5,8 @@ router.get('/timeseries/', controllers.getTimeSeries);
 
 router.get('/fundamentals/', controllers.getFundamentals);
 
+router.get('/watchlistTimeseries/', controllers.getWatchlistTimeseries)
+
 // router.get('/watchlist/', controllers.getSecurity);
 
 // router.post('/watchlist/', controllers.addSecurity);

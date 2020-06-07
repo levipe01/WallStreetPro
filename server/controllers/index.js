@@ -34,6 +34,16 @@ module.exports = {
       });
   },
 
+  getWatchlistTimeseries: (req, res) => {
+    model.getWatchlistTimeseries(req.query)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => {
+        res.status(404).json(err);
+      });
+  },
+
   // addTrack: (req, res) => {
   //   model.addTrack(req)
   //     .then((data) => {

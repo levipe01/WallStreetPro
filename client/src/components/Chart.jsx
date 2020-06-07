@@ -16,13 +16,23 @@ const Chart = ({labels, datasets, cName}) => {
         options={{
           title:{
             display:true,
-            text:`${cName} Intraday Stock Price`,
+            text:cName,
             fontSize:20
           },
           legend:{
-            display:true,
-            position:'right'
-          }
+            display:false,
+          },
+          scales: {
+            xAxes: [{
+                gridLines: {
+                    display:false
+                },
+                ticks: {
+                  display: false
+                }
+            }],
+          },
+          scaleShowLabels : false
         }}
       />
     </div>

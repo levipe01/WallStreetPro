@@ -5,6 +5,10 @@ h1 {
   font-size: 60px;
 }
 
+body {
+  margin-right: 20px;
+}
+
 .submit-button {
   margin-left: 5px;
 }
@@ -14,10 +18,124 @@ h1 {
 }
 
 .info-header {
+  text-align: center;
+}
+
+.header-main {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  width:100%;
+}
+
+.chart-main {
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 1px solid;
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  text-align: center;
   width:100%;
+}
+
+.company-description {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  width:50%;
+}
+
+.header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  width:100%;
+}
+
+.carousel-img {
+  height: 160px;
+  width: 160px;
+  background: transparent url(https://media.giphy.com/media/y1ZBcOGOOtlpC/giphy.gif) no-repeat scroll center center;
+
+}
+
+.a-carousel-card {
+  font-family: "Amazon Ember", Arial;
+  font-size: 13px;
+  line-height: 19px;
+  color: #0066c0;
+  vertical-align: top;
+  text-align: left;
+  overflow: hidden;
+  width: 160px;
+  min-height: 100%;
+  list-style-type: none;
+  display: inline-block;
+  white-space: normal;
+  letter-spacing: normal
+}
+
+.carousel_button {
+  background: #e7e9ec;
+  border-radius: 3px;
+  border-color: #ADB1B8 #A2A6AC #8D9096;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  font-size: 13px;
+  width: 40px;
+  height: 100%;
+  opacity: 25%;
+}
+
+.carousel_button:focus {
+  outline:0;
+  border-color:turquoise;
+  box-shadow:0 0 3px 2px teal;
+}
+
+.carousel_button:active{
+  border-color:#adb1b8 #a2a6ac #a2a6ac;
+}
+
+.a-button:hover{
+  border-color:#a2a6ac #979aa1 #82858a;
+}
+
+.button-left {
+  background-image: url(https://m.media-amazon.com/images/G/01/AUIClients/AmazonUIIcon-sprite_1x-e9434610f810a3a99b3f0e49c1b938c9d76628b8._V2_.png);
+  -webkit-background-size: 400px 900px;
+  background-size: 400px 900px;
+  background-position: left;
+  background-repeat: no-repeat;
+  width: 11px;
+  height: 15px;
+  background-position: -123px -7px;
+  margin-left: 11px;
+}
+
+.button-right {
+  background-image: url(https://m.media-amazon.com/images/G/01/AUIClients/AmazonUIIcon-sprite_1x-e9434610f810a3a99b3f0e49c1b938c9d76628b8._V2_.png);
+  -webkit-background-size: 400px 900px;
+  background-size: 400px 900px;
+  background-position: left;
+  background-repeat: no-repeat;
+  width: 11px;
+  height: 15px;
+  background-position: -105px -7px;
+  margin-left: 11px;
 }

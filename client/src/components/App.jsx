@@ -1,6 +1,7 @@
 import React from 'react';
 import Chart from './Chart.jsx';
 import Description from './Description.jsx';
+import Header from './Header.jsx'
 
 const axios = require('axios').default;
 const config = require('../../../config.js');
@@ -18,15 +19,23 @@ class App extends React.Component {
       datasets: [],
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
     this.getIntraday = this.getIntraday.bind(this);
+    this.updateTicker = this.updateTicker.bind(this);
   }
 
   componentDidMount() {
     this.getCompanyInfo()
     this.getIntraday()
+  }
+
+  updateTicker(newticker) {
+    this.setState({
+      ticker: newticker
+    }, () => {
+      this.getCompanyInfo();
+      this.getIntraday();
+    })
   }
 
   getCompanyInfo() {
@@ -43,7 +52,6 @@ class App extends React.Component {
   getIntraday() {
     axios.get(`/data/timeseries?ticker=${this.state.ticker}`)
     .then((response) => {
-      console.log(response)
       this.setState({
         datasets: [
           {
@@ -71,29 +79,14 @@ class App extends React.Component {
     .catch((err) => err);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.getIntraday();
-    this.getCompanyInfo();
-  }
-
-  handleUpdate(event) {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  }
-
   render() {
     return (
       <div>
-        <h1>The Secaucus Observer</h1>
-        <form action="/action_page.php">
-          <label htmlFor="fname">Ticker: </label>
-          <input type="text" id="ticker" name="ticker" value={this.state.ticker} onChange={this.handleUpdate}></input>
-          <input className='submit-button' type="submit" value="Submit" onClick={this.handleSubmit}></input>
-        </form>
-        <Chart labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName}/>
+        <h1 className="header-main">THE SECAUCUS SENTINEL.</h1>
+        <Header labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker}/>
+        <div className='chart-main'>
+          <Chart labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName}/>
+        </div>
         <Description desInfo={this.state.desInfo}/>
       </div>
     );

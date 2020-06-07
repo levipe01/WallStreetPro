@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const config = require('../../config.js');
 const axios = require('axios').default;
+const _ = require('underscore');
 
 module.exports = {
   getFundamentals: (req) => {
@@ -18,9 +19,26 @@ module.exports = {
           price: price,
           time: time,
         }
-        console.log(res)
         return res
       })
+      .then((res) => res)
+      .catch((err) => err);
+  },
+
+  getWatchlistTimeseries: (req) => {
+    console.log(req.watchlist)
+    const data = _.map(JSON.parse(req.watchlist), (ticker) => { return axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/intraday-prices?token=${config.app.api}`)
+      .then((response) => {
+        const price = response.data.map((tick) => {return tick.marketAverage})
+        const time = response.data.map((tick) => {return tick.minute})
+        const res = {
+          price: price,
+          time: time,
+        }
+        return res
+      })
+    })
+    return Promise.all(data)
       .then((res) => res)
       .catch((err) => err);
   },
