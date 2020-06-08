@@ -36,9 +36,11 @@ class ChartCarousel extends React.Component {
     axios.get(`/data/watchlistTimeseries?watchlist=${stringifiedTickers}`)
     .then((response) => {
       const newCarouselData = []
-      let lineColor = 'rgba(0,0,0,1)'
+      let lineColor = ''
       response.data.forEach((item, index) => {
-        if (item.price[0] < item.price[item.price.length - 1]) {
+        let i = item.price.length - 1
+        while (item.price[i] === null) {i--}
+        if (item.price[0] < item.price[i]) {
           lineColor = 'rgba(13,236,13,1)'
         } else {
           lineColor = 'rgba(236,13,13,1)'

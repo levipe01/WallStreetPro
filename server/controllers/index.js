@@ -11,8 +11,8 @@ module.exports = {
       .catch(() => {
         model.getFundamentals(req.query.ticker)
           .then((response) => {
-            res.status(200).json(response.data);
-            const data = response.data
+            res.status(200).json(response);
+            const data = response
             return data;
           })
           .then((data) => {

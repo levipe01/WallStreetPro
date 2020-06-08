@@ -6,14 +6,24 @@ const _ = require('underscore');
 module.exports = {
   getFundamentals: (req) => {
     return axios.get(`https://cloud.iexapis.com/stable/stock/${req}/company?token=${config.app.api}`)
-      .then((res) => res)
+      .then((res) => {
+        return axios.get(`https://cloud.iexapis.com/stable/stock/${req}/earnings?last=4&token=${config.app.api}`)
+          .then((response) => {
+            const finalData = {
+              desInfo: res.data,
+              earnInfo: response.data,
+            }
+            return finalData;
+          })
+          .catch((err) => err)
+      })
       .catch((err) => err);
   },
 
   getTimeSeries: (req) => {
     return axios.get(`https://cloud.iexapis.com/stable/stock/${req}/intraday-prices?token=${config.app.api}`)
       .then((response) => {
-        const price = response.data.map((tick) => {return tick.marketAverage})
+        const price = response.data.map((tick) => {return tick.close})
         const time = response.data.map((tick) => {return tick.minute})
         const res = {
           price: price,
@@ -26,10 +36,9 @@ module.exports = {
   },
 
   getWatchlistTimeseries: (req) => {
-    console.log(req.watchlist)
     const data = _.map(JSON.parse(req.watchlist), (ticker) => { return axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/intraday-prices?token=${config.app.api}`)
       .then((response) => {
-        const price = response.data.map((tick) => {return tick.marketAverage})
+        const price = response.data.map((tick) => {return tick.close})
         const time = response.data.map((tick) => {return tick.minute})
         const res = {
           price: price,

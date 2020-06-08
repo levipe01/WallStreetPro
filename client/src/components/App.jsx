@@ -3,6 +3,7 @@ import Chart from './Chart.jsx';
 import Description from './Description.jsx';
 import ChartCarousel from './ChartCarousel.jsx'
 import Header from './Header.jsx'
+import Earnings from './Earnings.jsx'
 
 const axios = require('axios').default;
 const config = require('../../../config.js');
@@ -18,15 +19,16 @@ class App extends React.Component {
       desInfo: {},
       labels: [],
       datasets: [],
+      earnInfo: {},
     }
 
-    this.getCompanyInfo = this.getCompanyInfo.bind(this);
+    this.getFundamentals = this.getFundamentals.bind(this);
     this.getIntraday = this.getIntraday.bind(this);
     this.updateTicker = this.updateTicker.bind(this);
   }
 
   componentDidMount() {
-    this.getCompanyInfo()
+    this.getFundamentals()
     this.getIntraday()
   }
 
@@ -34,17 +36,18 @@ class App extends React.Component {
     this.setState({
       ticker: newticker
     }, () => {
-      this.getCompanyInfo();
+      this.getFundamentals();
       this.getIntraday();
     })
   }
 
-  getCompanyInfo() {
+  getFundamentals() {
     axios.get(`/data/fundamentals?ticker=${this.state.ticker}`)
     .then((response) => {
       this.setState({
-        cName: response.data.companyName,
-        desInfo: response.data
+        cName: response.data.desInfo.companyName,
+        desInfo: response.data.desInfo,
+        earnInfo: response.data.earnInfo,
       })
     })
     .catch((err) => err);
@@ -75,20 +78,23 @@ class App extends React.Component {
           }
         ],
         labels: response.data.time,
-      })
+      }, () => {console.log(this.state)})
     })
     .catch((err) => err);
   }
 
   render() {
     return (
-      <div>
+      <div className='master-grid'>
         <Header updateTicker={this.updateTicker}/>
         <ChartCarousel labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker}/>
         <div className='chart-main'>
         <Chart labels={this.state.labels} datasets={this.state.datasets} cName={this.state.cName} isMini={false}/>
         </div>
-        <Description desInfo={this.state.desInfo}/>
+        <div className='collapse-grid'>
+          <Description desInfo={this.state.desInfo}/>
+          <Earnings earnInfo={this.state.earnInfo}/>
+        </div>
       </div>
     );
   }
