@@ -211,7 +211,20 @@ button {
   margin: 5px;
 }
 
-.earnings-table td {
-  width: 150px;
+.earnings-table table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-right: 0px;
+}
+
+.earnings-table td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
   text-align: center;
+  margin: 0px;
+}
+
+.earnings-table tr:nth-child(even) {
+  background-color: #dddddd;
+  margin: 0px;
 }
