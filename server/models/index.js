@@ -41,21 +41,41 @@ module.exports = {
       .catch((err) => err);
   },
 
+  // getWatchlistTimeseries: (req) => {
+  //   const data = _.map(JSON.parse(req.watchlist), (ticker) => { return axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/intraday-prices?token=${config.app.api}`)
+  //     .then((response) => {
+  //       const price = response.data.map((tick) => {return tick.close})
+  //       const time = response.data.map((tick) => {return tick.minute})
+  //       const res = {
+  //         price: price,
+  //         time: time,
+  //       }
+  //       return res
+  //     })
+  //   })
+  //   return Promise.all(data)
+  //     .then((res) => res)
+  //     .catch((err) => err);
+  // },
+
   getWatchlistTimeseries: (req) => {
-    const data = _.map(JSON.parse(req.watchlist), (ticker) => { return axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/intraday-prices?token=${config.app.api}`)
+    return axios.get(`https://cloud.iexapis.com/stable/stock/market/batch?symbols=${req.watchlist}&types=intraday-prices&token=${config.app.api}`)
       .then((response) => {
-        const price = response.data.map((tick) => {return tick.close})
-        const time = response.data.map((tick) => {return tick.minute})
-        const res = {
-          price: price,
-          time: time,
+        const resArray = Object.values(response.data).map((company) => {return company['intraday-prices']})
+        let output = []
+        for(let i = 0; i < resArray.length; i++) {
+          const price = resArray[i].map((tick) => {return tick.close})
+          const time = resArray[i].map((tick) => {return tick.minute})
+          const res = {
+            price: price,
+            time: time,
+          }
+          output.push(res)
         }
-        return res
+        return output
       })
-    })
-    return Promise.all(data)
-      .then((res) => res)
-      .catch((err) => err);
+    .then((res) => res)
+    .catch((err) => err);
   },
 
   // addTrack: (req) => {
