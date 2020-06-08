@@ -14,7 +14,7 @@ const getFundamentals = (ticker) => new Promise((resolve, reject) => {
 });
 
 const addFundamentals = (fundamentals) => new Promise((resolve, reject) => {
-  client.set(fundamentals.symbol, JSON.stringify(fundamentals), 'EX', 600, (err, data) => {
+  client.set(fundamentals.desInfo.symbol, JSON.stringify(fundamentals), 'EX', 600, (err, data) => {
     if (err) {
       reject(err);
     } else {

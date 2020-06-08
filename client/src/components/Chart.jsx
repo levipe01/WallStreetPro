@@ -26,6 +26,7 @@ const Chart = ({labels, datasets, cName, isMini, updateTicker}) => {
             text:cName,
             fontSize:15
           },
+          spanGaps:true,
           legend:{
             display:false,
           },
@@ -59,6 +60,7 @@ const Chart = ({labels, datasets, cName, isMini, updateTicker}) => {
             text:cName,
             fontSize:25
           },
+          spanGaps:true,
           legend:{
             display:false,
           },
