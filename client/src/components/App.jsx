@@ -75,9 +75,9 @@ class App extends React.Component {
           datasets: [
             {
               label: this.state.ticker,
-              fill: false,
+              fill: true,
               lineTension: 0,
-              backgroundColor: 'rgba(75,192,192,1)',
+              backgroundColor: 'rgba(75,192,192,0.25)',
               borderColor: 'rgba(0,0,0,1)',
               borderWidth: 2,
               data: response.data.price,

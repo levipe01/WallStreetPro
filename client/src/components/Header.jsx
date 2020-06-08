@@ -37,7 +37,7 @@ class Header extends React.Component {
         </div>
         <div className='input-bar'>
           <form className='ticker-search'>
-            <label htmlFor="fname">Ticker: </label>
+            <label htmlFor="fname">Search: </label>
             <input type="text" id="ticker" name="ticker" value={this.state.ticker} onChange={this.handleUpdate}></input>
             <input className='submit-button' type="submit" value="Submit" onClick={this.handleSubmit}></input>
           </form>
@@ -46,10 +46,8 @@ class Header extends React.Component {
           </div>
           <div className='watchlist-update'>Watchlist:
             <select className="watchlist-dropdown">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="fiat">Fiat</option>
-              <option value="audi">Audi</option>
+              <option>Market Overview</option>
+              <option>My Portfolio</option>
             </select>
             <button>Create New</button>
           </div>

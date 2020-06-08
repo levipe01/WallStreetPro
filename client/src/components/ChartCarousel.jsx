@@ -56,7 +56,7 @@ class ChartCarousel extends React.Component {
               borderWidth: 2,
               data: item.price,
               pointBorderColor: 'rgba(75,192,192,1)',
-              pointBackgroundColor: '#fff',
+              pointBackgroundColor: 'black',
               pointBorderWidth: 0,
               pointHoverRadius: 5,
               pointHoverBackgroundColor: 'rgba(75,192,192,1)',

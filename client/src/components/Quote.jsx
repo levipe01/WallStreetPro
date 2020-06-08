@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from "moment";
 
 
 const Quote = ({quote}) => {
@@ -6,58 +7,92 @@ const Quote = ({quote}) => {
   let highTime = '';
   let rtQuote = '';
   let change = '';
-  let changePercent = ''
-  let high = ''
-  let low = ''
+  let changePercent = '';
+  let high = '';
+  let low = '';
+  let open = '';
+  let marketCap = 0;
+  let volume = 0;
+  let lastTradeTime = '';
+  let divStyle = {};
+
+  function thousands_separators(num)
+  {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
+  }
 
   if (quote.lowTime) {
-    lowTime = new Date(quote.lowTime).toUTCString()
-    highTime = new Date(quote.highTime).toUTCString()
+    lastTradeTime = moment(quote.lastTradeTime).format('LLLL')
+    lowTime = moment(quote.lowTime).format('h:mm A')
+    highTime = moment(quote.highTime).format('h:mm A')
     rtQuote = quote.iexRealtimePrice.toFixed(2)
     change = quote.change.toFixed(2)
     changePercent = (quote.changePercent * 100).toFixed(2)
     high = quote.high.toFixed(2)
     low = quote.low.toFixed(2)
+    marketCap = thousands_separators((quote.marketCap / 1000000000).toFixed(2))
+    volume = thousands_separators(quote.avgTotalVolume)
+  }
+
+  if (quote.open) {
+    open = quote.open.toFixed(2)
+  }
+
+  if (quote.change > 0) {
+    divStyle = { color: 'rgba(13,236,13,1)' }
+  } else if (quote.change < 0) {
+    divStyle = { color: 'rgba(236,13,13,1)' }
   }
 
   return (
     <div className='quote-main'>
       <div className='quote-top'>
-        <span className='curr-price'>{rtQuote} </span><span className='curr-chng'>{change} </span> <span className='curr-prct'>{changePercent}%</span>
-        <div className='quote-time'>{quote.latestTime}</div>
+        <span className='curr-price'>${rtQuote}</span>
+        <span className='curr-chng' style={divStyle}>{change}</span>
+        <span className='curr-prct' style={divStyle}>{changePercent}%</span>
+        <div className='quote-time'>{lastTradeTime}</div>
       </div>
 
-      <table>
+      <table className='quote-table'>
+        {
+          quote.open
+          && <tr>
+               <td className='table-field'><b>Open: </b></td>
+               <td>${open}</td>
+             </tr>
+        }
         <tr>
-          <td><b>High: </b></td>
-          <td>{high} <i>{highTime}</i></td>
+          <td className='table-field'><b>High: </b></td>
+          <td>${high} <i>({highTime})</i></td>
         </tr>
         <tr>
-          <td><b>Low: </b></td>
-          <td>{low} <i>{lowTime}</i></td>
+          <td className='table-field'><b>Low: </b></td>
+          <td>${low} <i>({lowTime})</i></td>
         </tr>
         <tr>
-          <td><b>Volume: </b></td>
-          <td>{quote.avgTotalVolume}</td>
+          <td className='table-field'><b>Volume: </b></td>
+          <td>{volume}</td>
         </tr>
         <tr>
-          <td><b>Prev: </b></td>
-          <td>{quote.previousClose}</td>
+          <td className='table-field'><b>Prev: </b></td>
+          <td>${quote.previousClose}</td>
         </tr>
         <tr>
-          <td><b>52-Wk High: </b></td>
-          <td>{quote.week52High}</td>
+          <td className='table-field'><b>52-Wk High: </b></td>
+          <td>${quote.week52High}</td>
         </tr>
         <tr>
-          <td><b>52-Wk Low: </b></td>
-          <td>{quote.week52Low}</td>
+          <td className='table-field'><b>52-Wk Low: </b></td>
+          <td>${quote.week52Low}</td>
         </tr>
         <tr>
-          <td><b>Market Cap: </b></td>
-          <td>{quote.marketCap}</td>
+          <td className='table-field'><b>Market Cap: </b></td>
+          <td>${marketCap} bil.</td>
         </tr>
         <tr>
-          <td><b>PE Ratio: </b></td>
+          <td className='table-field'><b>PE Ratio: </b></td>
           <td>{quote.peRatio}</td>
         </tr>
       </table>

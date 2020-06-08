@@ -39,17 +39,17 @@ class Earnings extends React.Component {
                 </tr>
                 <tr>
                   <td>Actual EPS</td>
-                  <td>{this.props.earnInfo.earnings[0].actualEPS}</td>
-                  <td>{this.props.earnInfo.earnings[1].actualEPS}</td>
-                  <td>{this.props.earnInfo.earnings[2].actualEPS}</td>
-                  <td>{this.props.earnInfo.earnings[3].actualEPS}</td>
+                  <td>${this.props.earnInfo.earnings[0].actualEPS}</td>
+                  <td>${this.props.earnInfo.earnings[1].actualEPS}</td>
+                  <td>${this.props.earnInfo.earnings[2].actualEPS}</td>
+                  <td>${this.props.earnInfo.earnings[3].actualEPS}</td>
                 </tr>
                 <tr>
                   <td>Consensus EPS</td>
-                  <td>{this.props.earnInfo.earnings[0].consensusEPS}</td>
-                  <td>{this.props.earnInfo.earnings[1].consensusEPS}</td>
-                  <td>{this.props.earnInfo.earnings[2].consensusEPS}</td>
-                  <td>{this.props.earnInfo.earnings[3].consensusEPS}</td>
+                  <td>${this.props.earnInfo.earnings[0].consensusEPS}</td>
+                  <td>${this.props.earnInfo.earnings[1].consensusEPS}</td>
+                  <td>${this.props.earnInfo.earnings[2].consensusEPS}</td>
+                  <td>${this.props.earnInfo.earnings[3].consensusEPS}</td>
                 </tr>
                 <tr>
                   <td>Number of Estimates</td>
@@ -60,24 +60,24 @@ class Earnings extends React.Component {
                 </tr>
                 <tr>
                   <td>Surprise Amount</td>
-                  <td>{this.props.earnInfo.earnings[0].EPSSurpriseDollar}</td>
-                  <td>{this.props.earnInfo.earnings[1].EPSSurpriseDollar}</td>
-                  <td>{this.props.earnInfo.earnings[2].EPSSurpriseDollar}</td>
-                  <td>{this.props.earnInfo.earnings[3].EPSSurpriseDollar}</td>
+                  <td>${this.props.earnInfo.earnings[0].EPSSurpriseDollar}</td>
+                  <td>${this.props.earnInfo.earnings[1].EPSSurpriseDollar}</td>
+                  <td>${this.props.earnInfo.earnings[2].EPSSurpriseDollar}</td>
+                  <td>${this.props.earnInfo.earnings[3].EPSSurpriseDollar}</td>
                 </tr>
                 <tr>
                   <td>Year Ago EPS</td>
-                  <td>{this.props.earnInfo.earnings[0].yearAgo}</td>
-                  <td>{this.props.earnInfo.earnings[1].yearAgo}</td>
-                  <td>{this.props.earnInfo.earnings[2].yearAgo}</td>
-                  <td>{this.props.earnInfo.earnings[3].yearAgo}</td>
+                  <td>${this.props.earnInfo.earnings[0].yearAgo}</td>
+                  <td>${this.props.earnInfo.earnings[1].yearAgo}</td>
+                  <td>${this.props.earnInfo.earnings[2].yearAgo}</td>
+                  <td>${this.props.earnInfo.earnings[3].yearAgo}</td>
                 </tr>
                 <tr>
                   <td>Year Ago Chng</td>
-                  <td>{this.props.earnInfo.earnings[0].yearAgoChangePercent}</td>
-                  <td>{this.props.earnInfo.earnings[1].yearAgoChangePercent}</td>
-                  <td>{this.props.earnInfo.earnings[2].yearAgoChangePercent}</td>
-                  <td>{this.props.earnInfo.earnings[3].yearAgoChangePercent}</td>
+                  <td>${this.props.earnInfo.earnings[0].yearAgoChangePercent}</td>
+                  <td>${this.props.earnInfo.earnings[1].yearAgoChangePercent}</td>
+                  <td>${this.props.earnInfo.earnings[2].yearAgoChangePercent}</td>
+                  <td>${this.props.earnInfo.earnings[3].yearAgoChangePercent}</td>
                 </tr>
                 <tr>
                   <td>Report Date</td>
