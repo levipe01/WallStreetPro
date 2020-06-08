@@ -24,6 +24,16 @@ module.exports = {
       });
   },
 
+  getQuote: (req, res) => {
+    model.getQuote(req.query.ticker)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => {
+        res.status(404).json(err);
+      });
+  },
+
   getTimeSeries: (req, res) => {
     model.getTimeSeries(req.query.ticker)
       .then((data) => {

@@ -35,6 +35,12 @@ module.exports = {
       .catch((err) => err);
   },
 
+  getQuote: (req) => {
+    return axios.get(`https://cloud.iexapis.com/stable/stock/${req}/quote?token=${config.app.api}`)
+      .then((res) => res.data)
+      .catch((err) => err);
+  },
+
   getWatchlistTimeseries: (req) => {
     const data = _.map(JSON.parse(req.watchlist), (ticker) => { return axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/intraday-prices?token=${config.app.api}`)
       .then((response) => {

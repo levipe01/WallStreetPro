@@ -10,9 +10,7 @@ h1 {
   padding: 15px 0px;
   margin: 0px;
   text-align: center;
-
   font-size: 60px;
-
 }
 
 button {
@@ -85,7 +83,6 @@ button {
   margin: 0px;
 }
 
-
 .submit-button {
   margin-left: 5px;
   opacity: 75%;
@@ -99,6 +96,10 @@ button {
   text-align: center;
 }
 
+.static-grid {
+  display: flex;
+}
+
 .chart-main {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -106,7 +107,26 @@ button {
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  width:100%;
+  width:70%;
+  margin: 5px;
+}
+
+.quote-main {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  width:30%;
+  margin: 5px;
+  /* color: rgb(77, 75, 75); */
+}
+
+.chart-carousel {
+  border-bottom: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding-bottom: 10px;
 }
 
 .a-carousel-card {
@@ -195,7 +215,7 @@ button {
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
   width:50%;
-  color: rgb(77, 75, 75);
+  /* color: rgb(77, 75, 75); */
   margin: 5px;
 }
 
@@ -207,7 +227,7 @@ button {
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
   width:50%;
-  color: rgb(77, 75, 75);
+  /* color: rgb(77, 75, 75); */
   margin: 5px;
 }
 
@@ -224,7 +244,54 @@ button {
   margin: 0px;
 }
 
-.earnings-table tr:nth-child(even) {
-  background-color: #dddddd;
+.quote-top {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.curr-price {
+  font-size: 40px;
+  font-weight: 900;
+  margin: 0px 5px;
+}
+
+.quote-table {
+  font-size: 17px;
+  text-align: center;
+}
+
+.quote-table table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-right: 0px;
+}
+
+.quote-table td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: center;
   margin: 0px;
 }
+
+.table-field {
+  width: 50%;
+}
+
+.curr-prct {
+  font-size: 30px;
+  margin: 0px 5px;
+  font-weight: 600;
+}
+
+.curr-chng {
+  font-size: 30px;
+  margin: 0px 5px;
+  font-weight: 600;
+}
+
+.quote-time {
+  font-size: 17px;
+}
+
+
+
