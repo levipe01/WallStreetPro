@@ -1,6 +1,7 @@
 import React from 'react';
 import Chart from './Chart.jsx';
 import Description from './Description.jsx';
+import ChartCarousel from './ChartCarousel.jsx'
 import Header from './Header.jsx'
 
 const axios = require('axios').default;
@@ -69,7 +70,7 @@ class App extends React.Component {
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
             pointHoverBorderColor: 'rgba(220,220,220,1)',
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 0,
             pointHitRadius: 10,
           }
         ],
@@ -82,10 +83,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="header-main">THE SECAUCUS SENTINEL.</h1>
-        <Header labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker}/>
+        <Header updateTicker={this.updateTicker}/>
+        <ChartCarousel labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker}/>
         <div className='chart-main'>
-          <Chart labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName}/>
+        <Chart labels={this.state.labels} datasets={this.state.datasets} cName={this.state.cName} isMini={false}/>
         </div>
         <Description desInfo={this.state.desInfo}/>
       </div>

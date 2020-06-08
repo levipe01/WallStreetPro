@@ -1,16 +1,93 @@
-h1 {
-  display:block;
-  text-align: center;
-  width:100%;
-  font-size: 60px;
-}
-
 body {
   margin-right: 20px;
 }
 
+p {
+  margin: 0px;
+}
+
+h1 {
+  padding: 15px 0px;
+  margin: 0px;
+  text-align: center;
+
+  font-size: 60px;
+
+}
+
+button {
+  opacity: 75%;
+}
+
+.submit-button:active button:active{
+  border-color:#adb1b8 #a2a6ac #a2a6ac;
+}
+
+.submit-button:hover button:hover{
+  border-color:#a2a6ac #979aa1 #82858a;
+}
+
+.header-main {
+  border-bottom: 1px solid;
+  border-color: rgb(245, 240, 240);
+  width:100%;
+  margin-bottom: 10px;
+}
+
+.header-top{
+  display: flex;
+  justify-content: space-around;
+  width:100%;
+  border-bottom: 1px solid;
+  border-color: rgb(245, 240, 240);
+}
+
+.date-time {
+  padding: 35px 0px;
+  font-size: 15px;
+}
+
+.sign-up {
+  text-decoration: underline;
+  padding: 40px 40px;
+}
+
+.sign-up:hover {
+  color: #0066c0;
+  cursor: pointer;
+}
+
+.input-bar {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.ticker-search {
+  text-align: center;
+  margin: 0px;
+}
+
+.index-prices {
+  text-align: center;
+  margin: 0px;
+}
+
+.watchlist-dropdown {
+  height: 21px;
+  width: 150px;
+  margin: 0px 5px;
+}
+
+.watchlist-update {
+  text-align: center;
+  margin: 0px;
+}
+
+
 .submit-button {
   margin-left: 5px;
+  opacity: 75%;
 }
 
 .info-header:hover {
@@ -19,16 +96,6 @@ body {
 
 .info-header {
   text-align: center;
-}
-
-.header-main {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid;
-  border-color: rgb(245, 240, 240);
-  padding: 10px;
-  box-shadow: 1px 1px rgb(245, 240, 240);
-  width:100%;
 }
 
 .chart-main {
@@ -41,34 +108,9 @@ body {
   width:100%;
 }
 
-.company-description {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 1px solid;
-  border-color: rgb(245, 240, 240);
-  padding: 10px;
-  box-shadow: 1px 1px rgb(245, 240, 240);
-  width:50%;
-}
-
-.header {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 1px solid;
-  border-color: rgb(245, 240, 240);
-  padding: 10px;
-  box-shadow: 1px 1px rgb(245, 240, 240);
-  width:100%;
-}
-
-.carousel-img {
-  height: 160px;
-  width: 160px;
-  background: transparent url(https://media.giphy.com/media/y1ZBcOGOOtlpC/giphy.gif) no-repeat scroll center center;
-
-}
-
 .a-carousel-card {
+  border: 1px 1px 1px 1px solid;
+  border-color: grey;
   font-family: "Amazon Ember", Arial;
   font-size: 13px;
   line-height: 19px;
@@ -99,7 +141,7 @@ body {
   font-size: 13px;
   width: 40px;
   height: 100%;
-  opacity: 25%;
+  opacity: 50%;
 }
 
 .carousel_button:focus {
@@ -138,4 +180,14 @@ body {
   height: 15px;
   background-position: -105px -7px;
   margin-left: 11px;
+}
+
+.company-description {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  width:50%;
 }
