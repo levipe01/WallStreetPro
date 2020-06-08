@@ -3,6 +3,8 @@ const controllers = require('../controllers/index.js');
 
 router.get('/timeseries/', controllers.getTimeSeries);
 
+router.get('/quote/', controllers.getQuote);
+
 router.get('/fundamentals/', controllers.getFundamentals);
 
 router.get('/watchlistTimeseries/', controllers.getWatchlistTimeseries)

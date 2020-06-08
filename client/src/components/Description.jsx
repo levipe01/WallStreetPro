@@ -7,7 +7,7 @@ class Descripton extends React.Component {
     super(props);
 
     this.state = {
-      displayContent: false
+      displayContent: true,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -26,7 +26,7 @@ class Descripton extends React.Component {
 
     return (
       <div className='company-description'>
-        <h2 className='info-header' onClick={this.handleClick}>Company Description</h2>
+        <h2 className='info-header' onClick={this.handleClick}>Overview</h2>
         <Collapse isOpened={this.state.displayContent}>
           <div><b>Exchange:</b> {this.props.desInfo.exchange}</div>
           <div><b>Industry:</b> {this.props.desInfo.industry}</div>

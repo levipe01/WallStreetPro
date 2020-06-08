@@ -7,7 +7,7 @@ class Earnings extends React.Component {
     super(props);
 
     this.state = {
-      displayContent: false,
+      displayContent: true,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -24,7 +24,7 @@ class Earnings extends React.Component {
   render() {
     return (
       <div className='company-earnings'>
-        <h2 className='info-header' onClick={this.handleClick}>Company Earnings</h2>
+        <h2 className='info-header' onClick={this.handleClick}>Earnings</h2>
         {
           this.props.earnInfo.earnings
             &&

@@ -10,9 +10,7 @@ h1 {
   padding: 15px 0px;
   margin: 0px;
   text-align: center;
-
   font-size: 60px;
-
 }
 
 button {
@@ -85,7 +83,6 @@ button {
   margin: 0px;
 }
 
-
 .submit-button {
   margin-left: 5px;
   opacity: 75%;
@@ -99,6 +96,10 @@ button {
   text-align: center;
 }
 
+.static-grid {
+  display: flex;
+}
+
 .chart-main {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -106,7 +107,20 @@ button {
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  width:100%;
+  width:70%;
+  margin: 5px;
+}
+
+.quote-main {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid;
+  border-color: rgb(245, 240, 240);
+  padding: 10px;
+  box-shadow: 1px 1px rgb(245, 240, 240);
+  width:30%;
+  margin: 5px;
+  color: rgb(77, 75, 75);
 }
 
 .a-carousel-card {
@@ -228,3 +242,28 @@ button {
   background-color: #dddddd;
   margin: 0px;
 }
+
+.curr-price {
+  font-size: 35px;
+  text-decoration: bold;
+}
+
+.quote-top {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.curr-prct {
+  font-size: 25px;
+}
+
+.curr-chng {
+  font-size: 25px;
+}
+
+.quote-time {
+  font-size: 20px;
+}
+
+
+
