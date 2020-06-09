@@ -7,14 +7,18 @@ router.get('/quote/', controllers.getQuote);
 
 router.get('/fundamentals/', controllers.getFundamentals);
 
-router.get('/watchlistTimeseries/', controllers.getWatchlistTimeseries)
+router.get('/watchlist/timeseries', controllers.getWatchlistTimeseries)
 
-// router.get('/watchlist/', controllers.getSecurity);
+router.post('/watchlist/security', controllers.addSecurity);
 
-// router.post('/watchlist/', controllers.addSecurity);
+router.delete('/watchlist/security', controllers.deleteSecurity);
 
-// router.delete('/watchlist/', controllers.deleteSecurity);
+router.get('/watchlist/watchlist', controllers.getWatchlist);
 
-// router.put('/watchlist/', controllers.updateName);
+router.get('/watchlist', controllers.getWatchlists);
+
+router.post('/watchlist', controllers.addWatchlist);
+
+router.delete('/watchlist', controllers.deleteWatchlist);
 
 module.exports = router;

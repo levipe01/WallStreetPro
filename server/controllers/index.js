@@ -54,34 +54,65 @@ module.exports = {
       });
   },
 
-  // addTrack: (req, res) => {
-  //   model.addTrack(req)
-  //     .then((data) => {
-  //       res.status(200).json(data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       res.status(400).json(e);
-  //     });
-  // },
+  addSecurity: (req, res) => {
+    model.addSecurity(req)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((e) => {
+        res.status(400).json(e);
+      });
+  },
 
-  // deleteTrack: (req, res) => {
-  //   model.deleteTrackById(req)
-  //     .then((data) => {
-  //       res.status(200).json(data);
-  //     })
-  //     .catch((e) => {
-  //       res.status(400).json(e);
-  //     });
-  // },
+  deleteSecurity: (req, res) => {
+    model.deleteSecurity(req)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((e) => {
+        res.status(400).json(e);
+      });
+  },
 
-  // updatePlayCount: (req, res) => {
-  //   model.updatePlayCountById(req)
-  //     .then((data) => {
-  //       res.status(200).json(data);
-  //     })
-  //     .catch((e) => {
-  //       res.status(400).json(e);
-  //     });
-  // },
+  getWatchlist: (req, res) => {
+    model.getWatchlist(req)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((e) => {
+        res.status(400).json(e);
+      });
+  },
+
+  getWatchlists: (req, res) => {
+    model.getWatchlists(req)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((e) => {
+        res.status(400).json(e);
+      });
+  },
+
+  addWatchlist: (req, res) => {
+    model.addWatchlist(req)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((e) => {
+        res.status(400).json(e);
+      });
+  },
+
+  deleteWatchlist: (req, res) => {
+    model.deleteWatchlist(req)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((e) => {
+        res.status(400).json(e);
+      });
+  },
+
+
 };

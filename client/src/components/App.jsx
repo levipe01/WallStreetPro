@@ -22,18 +22,32 @@ class App extends React.Component {
       datasets: [],
       earnInfo: {},
       quote: {},
+      user_id: '1',
+      watchlists: [],
     }
 
     this.getFundamentals = this.getFundamentals.bind(this);
     this.getIntraday = this.getIntraday.bind(this);
     this.updateTicker = this.updateTicker.bind(this);
     this.getQuote = this.getQuote.bind(this);
+    this.getWatchlists = this.getWatchlists.bind(this);
   }
 
   componentDidMount() {
     this.getFundamentals()
     this.getIntraday()
     this.getQuote()
+    this.getWatchlists()
+  }
+
+  getWatchlists() {
+    axios.get(`/data/watchlist?user_id=${this.state.user_id}`)
+    .then((response) => {
+      this.setState({
+        watchlists: response.data,
+      }, () => {console.log(this.state)})
+    })
+    .catch((err) => err);
   }
 
   updateTicker(newticker) {
@@ -101,7 +115,7 @@ class App extends React.Component {
   render() {
     return (
       <div className='master-grid'>
-        <Header updateTicker={this.updateTicker}/>
+        <Header updateTicker={this.updateTicker} watchlists={this.state.watchlists}/>
         <ChartCarousel labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker}/>
 
         <div className='static-grid'>

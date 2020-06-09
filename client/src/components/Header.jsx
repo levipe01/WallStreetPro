@@ -32,7 +32,10 @@ class Header extends React.Component {
       <div className="header-main">
         <div className="header-top">
           <span className='date-time'>{moment().format('LLLL')}</span>
-          <h1>THE SECAUCUS SENTINEL.</h1>
+          <div className='logo-wrapper'>
+            <img className='logo' src="stock-market.png" />
+            <h1>WallStreetPro</h1>
+          </div>
           <span className='sign-up'>Sign Up</span>
         </div>
         <div className='input-bar'>
@@ -46,8 +49,11 @@ class Header extends React.Component {
           </div>
           <div className='watchlist-update'>Watchlist:
             <select className="watchlist-dropdown">
-              <option>Market Overview</option>
-              <option>My Portfolio</option>
+              {
+                this.props.watchlists.map((watchlist) => {
+                return <option>{watchlist.name}</option>
+                })
+              }
             </select>
             <button>Create New</button>
           </div>

@@ -6,11 +6,27 @@ p {
   margin: 0px;
 }
 
+.logo-wrapper {
+  text-align: center;
+  display: inline-flex;
+}
+
 h1 {
   padding: 15px 0px;
   margin: 0px;
-  text-align: center;
-  font-size: 60px;
+  font-size: 65px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 800;
+  background: -webkit-linear-gradient(rgb(125, 125, 240), rgba(116, 21, 116, 0.75));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo {
+  height: 58px;
+  width: 58px;
+  margin-top: 25px;
+  margin-right: 10px;
 }
 
 button {
@@ -44,11 +60,13 @@ button {
   padding: 45px 0px 30px 0px;
   font-size: 13px;
   height: 15px;
+  /* color: rgba(116, 21, 116, 0.75); */
 }
 
 .sign-up {
   text-decoration: underline;
   padding: 40px 40px;
+  /* color: rgba(116, 21, 116, 0.75); */
 }
 
 .sign-up:hover {

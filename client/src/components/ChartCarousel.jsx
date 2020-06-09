@@ -33,7 +33,7 @@ class ChartCarousel extends React.Component {
 
   componentDidMount() {
     const stringifiedTickers = JSON.stringify(this.state.watchlistTickers)
-    axios.get(`/data/watchlistTimeseries?watchlist=${stringifiedTickers}`)
+    axios.get(`/data/watchlist/timeseries?watchlist=${stringifiedTickers}`)
     .then((response) => {
       const newCarouselData = []
       let lineColor = ''
