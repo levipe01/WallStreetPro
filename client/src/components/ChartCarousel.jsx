@@ -12,8 +12,11 @@ class ChartCarousel extends React.Component {
 
     this.state = {
       ticker: '',
-      watchlistTickers: ['AAPL', 'TSLA', 'IBM', 'KO', 'PFE', 'INTC', 'DOW', 'X', 'JNJ', 'HOG', 'SBUX'],
-      watchlistNames: ['Apple Inc', 'Telsa Inc', 'IBM Corp', 'The Coca-Cola Co.', 'Pfizer Inc', 'Intel Corp', 'Dow Inc', 'United Steel Corp', 'Johnson & Johnson', 'Harley-Davidson', 'Starbucks Corp' ],
+      removeVisible: false,
+      currentIndex: 0,
+      currentPage: 1,
+      totalPages: 0,
+      itemsPerPage: 0,
       carouselData: [],
     };
 
@@ -29,10 +32,26 @@ class ChartCarousel extends React.Component {
       { width: 1600, itemsToShow: 9, itemsToScroll: 9 },
     ];
 
+    this.toggleRemove = this.toggleRemove.bind(this);
+    this.resetCarousel = this.resetCarousel.bind(this);
+    this.goto = this.goto.bind(this);
+    this.getTotalPages = this.getTotalPages.bind(this);
+    this.getCurrentPage = this.getCurrentPage.bind(this);
+    this.getWatchlistData = this.getWatchlistData.bind(this);
   }
 
   componentDidMount() {
-    const stringifiedTickers = JSON.stringify(this.state.watchlistTickers)
+    this.getWatchlistData()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.watchlistTickers !== prevProps.watchlistTickers) {
+      this.getWatchlistData()
+    }
+  }
+
+  getWatchlistData() {
+    const stringifiedTickers = JSON.stringify(this.props.watchlistTickers)
     axios.get(`/data/watchlist/timeseries?watchlist=${stringifiedTickers}`)
     .then((response) => {
       const newCarouselData = []
@@ -48,7 +67,7 @@ class ChartCarousel extends React.Component {
         newCarouselData.push({
           datasets: [
             {
-              label: this.state.watchlistTickers[index],
+              label: this.props.watchlistTickers[index],
               fill: false,
               lineTension: 0,
               backgroundColor: 'rgba(75,192,192,1)',
@@ -67,7 +86,7 @@ class ChartCarousel extends React.Component {
             }
           ],
           labels: item.time,
-          cName: this.state.watchlistNames[index],
+          cName: this.props.watchlistNames[index],
         })
       })
       return newCarouselData
@@ -78,6 +97,41 @@ class ChartCarousel extends React.Component {
       })
     })
     .catch((err) => console.log(err));
+  }
+
+  resetCarousel() {
+    this.goto();
+    this.setState({
+      currentPage: 1,
+      currentIndex: 0,
+    });
+  }
+
+  getCurrentPage(currentItem, nextItem) {
+    const newCurrentPage = Math.ceil(nextItem.index / this.state.itemsPerPage) + 1;
+    this.setState({
+      currentIndex: nextItem.index,
+      currentPage: newCurrentPage,
+    });
+  }
+
+  goto() { this.carousel.goTo(Number(0)); }
+
+  getTotalPages() {
+    const itemsPerPage = currentBreakPoint.itemsToShow
+    const newTotalPages = Math.ceil(this.state.watchlistTickers.length / itemsPerPage);
+    this.setState({
+      totalPages: newTotalPages,
+      itemsPerPage,
+      currentPage: Math.ceil(this.state.currentIndex / itemsPerPage) + 1,
+    });
+  }
+
+  toggleRemove() {
+    const newState = !this.state.removeVisible;
+    this.setState({
+      removeVisible: newState,
+    });
   }
 
   render() {
@@ -95,6 +149,25 @@ class ChartCarousel extends React.Component {
 
           {this.state.carouselData.map((company) => <Chart labels={company.labels} datasets={company.datasets} cName={company.cName} isMini={true} updateTicker={this.props.updateTicker}/>)}
         </Carousel>
+        <div className='carousel-footer'>
+          <div className="footer-left">
+            <div className="page-nums">Page {this.state.currentPage} of {this.state.totalPages}</div>
+            {
+              this.state.currentPage > 1
+              && <div className="start-over" onClick={resetCarousel}>
+                    <div className='seperator'></div>
+                    <div className='so-button'>Start Over</div>
+                  </div>
+            }
+          </div>
+          <div className="footer-right">
+            {
+              !this.state.removeVisible
+                ? <div className="feedbackButton" onClick={this.toggleRemove}>Remove</div>
+                : <div className="feedbackButton" onClick={this.toggleRemove}>Hide</div>
+            }
+          </div>
+        </div>
       </div>
 
     );
