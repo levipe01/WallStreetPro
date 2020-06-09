@@ -96,6 +96,10 @@ const Quote = ({quote}) => {
           <td>{quote.peRatio}</td>
         </tr>
       </table>
+      <div className='iex-cloud'>
+        <a href="https://iexcloud.io">IEX Cloud</a>
+      </div>
+
     </div>
   );
 }

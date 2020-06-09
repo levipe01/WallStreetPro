@@ -115,6 +115,10 @@ class App extends React.Component {
           <Description desInfo={this.state.desInfo}/>
           <Earnings earnInfo={this.state.earnInfo}/>
         </div>
+        <div className='iex-cloud'>
+        <a href="https://iexcloud.io">Data provided by IEX Cloud</a>
+        </div>
+
       </div>
     );
   }

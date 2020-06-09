@@ -8,7 +8,8 @@
   },
   "scripts": {
     "server-dev": "nodemon server/server.js",
-    "react-dev": "webpack -d --watch"
+    "react-dev": "webpack -d --watch",
+    "seed-db": "node database/seed_postgres.js"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
+    "pg": "^8.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",

@@ -263,7 +263,6 @@ button {
 .quote-table table {
   border-collapse: collapse;
   width: 100%;
-  margin-right: 0px;
 }
 
 .quote-table td, th {
@@ -293,5 +292,19 @@ button {
   font-size: 17px;
 }
 
+.iex-cloud a {
+  color: #4c4e50;
+}
+
+.iex-cloud a:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.iex-cloud{
+  text-align: center;
+  margin: auto;
+  width: 50%;
+}
 
 
