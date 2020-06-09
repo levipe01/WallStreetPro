@@ -117,9 +117,9 @@ class ChartCarousel extends React.Component {
 
   goto() { this.carousel.goTo(Number(0)); }
 
-  getTotalPages() {
+  getTotalPages(currentBreakPoint) {
     const itemsPerPage = currentBreakPoint.itemsToShow
-    const newTotalPages = Math.ceil(this.state.watchlistTickers.length / itemsPerPage);
+    const newTotalPages = Math.ceil(this.props.watchlistTickers.length / itemsPerPage);
     this.setState({
       totalPages: newTotalPages,
       itemsPerPage,
@@ -144,17 +144,17 @@ class ChartCarousel extends React.Component {
 
       <div className='chart-carousel'>
         <Carousel itemsToShow={8} ref={(ref) => { this.carousel = ref; }} renderArrow={myArrow}
-           breakPoints={this.breakPoints}
-           transitionMs={900} itemsToScroll={8} pagination={false}>
+           breakPoints={this.breakPoints} onResize={this.getTotalPages} onNextStart={this.getCurrentPage}
+           transitionMs={900} itemsToScroll={8} pagination={false} >
 
-          {this.state.carouselData.map((company) => <Chart labels={company.labels} datasets={company.datasets} cName={company.cName} isMini={true} updateTicker={this.props.updateTicker}/>)}
+          {this.state.carouselData.map((company) => <Chart labels={company.labels} datasets={company.datasets} cName={company.cName} isMini={true} updateTicker={this.props.updateTicker} removeVisible={this.state.removeVisible} deleteSecurity={this.props.deleteSecurity}/>)}
         </Carousel>
         <div className='carousel-footer'>
           <div className="footer-left">
             <div className="page-nums">Page {this.state.currentPage} of {this.state.totalPages}</div>
             {
               this.state.currentPage > 1
-              && <div className="start-over" onClick={resetCarousel}>
+              && <div className="start-over" onClick={this.resetCarousel}>
                     <div className='seperator'></div>
                     <div className='so-button'>Start Over</div>
                   </div>
@@ -163,8 +163,8 @@ class ChartCarousel extends React.Component {
           <div className="footer-right">
             {
               !this.state.removeVisible
-                ? <div className="feedbackButton" onClick={this.toggleRemove}>Remove</div>
-                : <div className="feedbackButton" onClick={this.toggleRemove}>Hide</div>
+                ? <div className="removeButton" onClick={this.toggleRemove}>Remove</div>
+                : <div className="removeButton" onClick={this.toggleRemove}>Hide</div>
             }
           </div>
         </div>

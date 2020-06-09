@@ -110,8 +110,8 @@ module.exports = {
   },
 
   deleteSecurity: (req) => {
-    const queryString = 'DELETE FROM watchlists_securities WHERE (id=$1)';
-    const options = [req.query.wl_sec_id];
+    const queryString = 'DELETE FROM watchlists_securities WHERE (watchlist_id=$1 AND security_id=$2)';
+    const options = [req.query.watchlist_id, req.query.ticker];
 
     return pg.query(queryString, options)
       .then((res) => res)

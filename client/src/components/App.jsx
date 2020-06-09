@@ -25,8 +25,8 @@ class App extends React.Component {
       user_id: '1',
       watchlists: [],
       currentWatchlist: 0,
-      watchlistTickers: ['AAPL', 'TSLA', 'IBM', 'KO', 'PFE', 'INTC', 'DOW', 'X'],
-      watchlistNames: ['Apple Inc', 'Telsa Inc', 'IBM Corp', 'The Coca-Cola Co.', 'Pfizer Inc', 'Intel Corp', 'Dow Inc', 'United Steel Corp'],
+      watchlistTickers: ['AAPL'],
+      watchlistNames: ['Apple Inc'],
     }
 
     this.getFundamentals = this.getFundamentals.bind(this);
@@ -36,6 +36,7 @@ class App extends React.Component {
     this.getWatchlists = this.getWatchlists.bind(this);
     this.getCurrentWatchlist = this.getCurrentWatchlist.bind(this);
     this.getWatchlistData = this.getWatchlistData.bind(this);
+    this.deleteSecurity = this.deleteSecurity.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +63,17 @@ class App extends React.Component {
     }, () => {this.getWatchlistData()})
   }
 
+  deleteSecurity(ticker) {
+    axios.delete(`/data/watchlist/security?ticker=${ticker}&watchlist_id=${this.state.currentWatchlist}`)
+    .then(() => {
+      this.getWatchlistData()
+    })
+    .then(() => {
+      console.log(this.state)
+    })
+    .catch((err) => err);
+  }
+
   getWatchlistData() {
     axios.get(`/data/watchlist/watchlist?watchlist_id=${this.state.currentWatchlist}`)
     .then((response) => {
@@ -72,7 +84,6 @@ class App extends React.Component {
         watchlistNames: names,
       }, () => {
         this.updateTicker(this.state.watchlistTickers[0])
-        console.log(this.state)
       })
     })
     .catch((err) => err);
@@ -85,6 +96,7 @@ class App extends React.Component {
       this.getFundamentals();
       this.getQuote()
       this.getIntraday();
+      console.log(this.state)
     })
   }
 
@@ -144,7 +156,7 @@ class App extends React.Component {
     return (
       <div className='master-grid'>
         <Header updateTicker={this.updateTicker} watchlists={this.state.watchlists} getCurrentWatchlist={this.getCurrentWatchlist}/>
-        <ChartCarousel labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker} watchlistTickers={this.state.watchlistTickers} watchlistNames={this.state.watchlistNames}/>
+        <ChartCarousel labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker} watchlistTickers={this.state.watchlistTickers} watchlistNames={this.state.watchlistNames} deleteSecurity={this.deleteSecurity}/>
 
         <div className='static-grid'>
           <div className='chart-main'>

@@ -325,4 +325,102 @@ button {
   width: 50%;
 }
 
+.page-nums {
+  padding-top: 10px;
+  color: black;
+  font-size: 13px;
+  text-rendering: optimizeLegibility;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  margin-right: 0!important;
+  text-align: right!important;
+  display: inline;
+}
 
+.start-over {
+  display: inline;
+}
+
+.so-button {
+  text-decoration: none;
+  color: #0066c0;
+  cursor: pointer;
+  font-size: 13px;
+  text-rendering: optimizeLegibility;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  display: inline;
+}
+
+.so-button:hover {
+  color:#c45500
+}
+
+.seperator {
+  font-size: 13px!important;
+  line-height: 19px!important;
+  text-align: right!important;
+  color: #111;
+  display: inline-block;
+  margin: -2px .67375em 0;
+  width: 1px;
+  background-color: #ddd;
+  line-height: 0;
+  height: 14px;
+  vertical-align: middle;
+}
+
+.footer-right {
+  width: 50%;
+  float: right;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.carousel-footer {
+  width: 100%;
+  display: inline-flex;
+}
+
+.footer-left {
+  float: left;
+  width: 50%;
+  margin-top: 10px;
+}
+
+.carousel-remove {
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  width: inherit;
+  height: 100%;
+  padding: 0px 0px;
+  top: 0;
+  left: inherit;
+  text-decoration: none;
+  border: 1px solid #6daee1;
+  background-color: #f0f7fc;
+  background-color: rgba(240,247,252,.8);
+  border-bottom: 1px dotted #6daee1;
+  font-size: 15px;
+  opacity: 75%;
+}
+
+.removeButton {
+  text-decoration: none;
+  padding: 0px;
+  /* line-height: 11px; */
+  margin: 0 0 0 2px;
+  display: inline-block;
+  /* background-size: 15px; */
+  color: #0066C0;
+  font-family: "Amazon Ember", arial;
+  font-size: 13px;
+  text-align: right;
+}
+
+.removeButton:hover {
+  /* background-size: 15px; */
+  color:#c45500;
+  outline:0;
+  text-decoration: underline;
+  cursor: pointer;
+}
