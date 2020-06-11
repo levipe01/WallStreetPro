@@ -91,8 +91,6 @@ const createWatchlistSecuritiesTable = () => {
          (1, 'BND'),
          (1, 'QQQ')`;
 
-  console.log(sqlStringCreate, sqlStringInsert)
-
   return db.query('DROP TABLE IF EXISTS watchlists_securities')
     .then(() => db.query(sqlStringCreate))
     .then(() => db.query(sqlStringInsert))

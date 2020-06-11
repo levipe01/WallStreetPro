@@ -130,7 +130,7 @@ module.exports = {
   addWatchlist: (req) => {
     const queryString = 'INSERT INTO watchlists (name, user_id) VALUES ($1, $2) RETURNING *';
     const options = [req.body.watchlist_name, req.body.user_id];
-    console.log(queryString, options)
+
     return pg.query(queryString, options)
       .then((res) => res.rows[0].id)
       .catch((err) => {console.log(err)});

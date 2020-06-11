@@ -96,6 +96,12 @@ button {
   margin: 0px 5px;
 }
 
+.new-watchlist {
+  height: 21px;
+  width: 150px;
+  margin: 0px 5px;
+}
+
 .watchlist-update {
   text-align: center;
   margin: 0px;

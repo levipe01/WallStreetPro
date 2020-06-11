@@ -9,16 +9,50 @@ class Header extends React.Component {
     this.state = {
       ticker: '',
       watchlist_name: '',
+      newWatchlist: false,
+      updateWatchlist: false,
+      newWatchlistName: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
+    this.toggleNewWatchlist = this.toggleNewWatchlist.bind(this);
+    this.toggleUpdateWatchlist = this.toggleUpdateWatchlist.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleAddChange =  this.handleAddChange.bind(this);
+  }
+
+  toggleNewWatchlist() {
+    const newState = !this.state.newWatchlist;
+    this.setState({
+      newWatchlist: newState,
+    });
+  }
+
+  toggleUpdateWatchlist() {
+    const newState = !this.state.updateWatchlist;
+    this.setState({
+      updateWatchlist: newState,
+    });
+  }
+
+  handleAdd() {
+    this.props.addWatchlist(this.state.newWatchlistName)
+    this.toggleNewWatchlist()
+  }
+
+  handleAddChange(event) {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.updateTicker(this.state.ticker);
+    this.props.updateTicker(this.state.ticker)
+    this.props.checkWatchlist(this.state.ticker)
   }
 
   handleUpdate(event) {
@@ -56,16 +90,27 @@ class Header extends React.Component {
             <span><b>DJIA</b> 27110.98 <span style={{color:'rgba(13,236,13,1)'}}>3.15%</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><b>SP500</b> 3193.93 <span style={{color:'rgba(13,236,13,1)'}}>2.62%</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><b>Nasdaq</b> 9814.08 <span style={{color:'rgba(13,236,13,1)'}}>2.06%</span></span>
           </div>
           <div className='watchlist-update'>Watchlist:
-            <select className="watchlist-dropdown" value={this.state.watchlist_name} onChange={this.handleDropdown}>
-              {
-                this.props.watchlists.map((watchlist) => {
-                return (<option value={watchlist.id} name={watchlist.name}>{watchlist.name}</option>)
-                })
-              }
-            </select>
-            <button>Create New</button>
-          </div>
+            {
+              !this.state.newWatchlist
+                ? <select className="watchlist-dropdown" value={this.state.watchlist_name} onChange={this.handleDropdown}>
+                    {
+                      this.props.watchlists.map((watchlist) => {
+                      return (<option value={watchlist.id} name={watchlist.name}>{watchlist.name}</option>)
+                      })
+                    }
+                  </select>
+                : <input className='new-watchlist' name='newWatchlistName' onChange={this.handleAddChange} value={this.state.newWatchlistName}></input>
+            }
 
+            {
+              !this.state.newWatchlist
+                ? <button onClick={this.toggleNewWatchlist}>Create New</button>
+                : <div>
+                    <button onClick={this.handleAdd}>Add</button>
+                    <button onClick={this.toggleNewWatchlist}>Cancel</button>
+                  </div>
+            }
+          </div>
         </div>
       </div>
     );
