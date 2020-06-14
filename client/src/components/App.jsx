@@ -14,7 +14,7 @@ class App extends React.Component {
 
     this.state = {
       user_id: '1',
-      ticker: 'AAPL',
+      ticker: '',
       cName: '',
       currentWatchlist: 0,
       desInfo: {},
@@ -42,29 +42,37 @@ class App extends React.Component {
     this.addSecurity = this.addSecurity.bind(this);
   }
 
-  componentDidMount() {
-    this.getFundamentals()
-    this.getIntraday()
-    this.getQuote()
-  }
-
   getCurrentWatchlist(newWatchlist) {
     this.setState({
       currentWatchlist: newWatchlist,
     }, () => { this.getWatchlistData() })
   }
 
-  updateTicker(newticker) {
-    const newState = {
-      ticker: newticker
-    }
-    const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
-
-    return setAsyncState(newState)
-      .then(() => { this.getFundamentals() })
+  updateTicker(searchTicker) {
+    return this.getFundamentals(searchTicker)
       .then(() => { this.getQuote() })
       .then(() => { this.getIntraday() })
-      .catch((err) => err);
+      .catch((error) => {
+        alert('Ticker Not Found')
+      });
+  }
+
+  getFundamentals(searchTicker) {
+    return axios.get(`/data/fundamentals?ticker=${searchTicker}`)
+      .then((response) => {
+        if (response.data.name === 'Error') {
+          throw new Error;
+        }
+        this.setState({
+          ticker: searchTicker,
+          cName: response.data.desInfo.companyName,
+          desInfo: response.data.desInfo,
+          earnInfo: response.data.earnInfo,
+        })
+      })
+      .catch((error) => {
+        throw new Error
+      });
   }
 
   checkWatchlist(searchTicker) {
@@ -93,14 +101,15 @@ class App extends React.Component {
       }
     })
 
-    const newState = { ticker: searchTicker }
-    const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
-
-    return setAsyncState(newState)
-      .then(() => {return this.getFundamentals()})
-      .then(() => {checkTicker(searchTicker)})
+    return this.getFundamentals(searchTicker)
+      .then((res) => {
+        checkTicker(searchTicker)
+      })
       .then(() => { this.getQuote() })
       .then(() => { this.getIntraday() })
+      .catch((error) => {
+        alert('Ticker Not Found')
+      });
   }
 
   addSecurity(ticker) {
@@ -151,18 +160,6 @@ class App extends React.Component {
           if (this.state.watchlistData.watchlistTickers[0]) {
             this.updateTicker(this.state.watchlistData.watchlistTickers[0])
           }
-        })
-      })
-      .catch((err) => err);
-  }
-
-  getFundamentals() {
-    return axios.get(`/data/fundamentals?ticker=${this.state.ticker}`)
-      .then((response) => {
-        this.setState({
-          cName: response.data.desInfo.companyName,
-          desInfo: response.data.desInfo,
-          earnInfo: response.data.earnInfo,
         })
       })
       .catch((err) => err);
