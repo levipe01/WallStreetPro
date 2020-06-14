@@ -110,7 +110,7 @@ module.exports = {
   },
 
   deleteSecurity: (req) => {
-    const queryString = 'DELETE FROM watchlists_securities WHERE (watchlist_id=$1 AND security_id=$2)';
+    const queryString = 'DELETE FROM watchlists_securities WHERE (watchlist_id=$1 AND security_id=$2) RETURNING *';
     const options = [req.query.watchlist_id, req.query.ticker];
 
     return pg.query(queryString, options)
@@ -137,8 +137,17 @@ module.exports = {
   },
 
   deleteWatchlist: (req) => {
-    const queryString = 'DELETE FROM watchlists WHERE (id=$1)';
+    const queryString = 'DELETE FROM watchlists WHERE (id=$1) RETURNING *';
     const options = [req.query.watchlist_id];
+
+    return pg.query(queryString, options)
+      .then((res) => res)
+      .catch((err) => err);
+  },
+
+  editWatchlist: (req) => {
+    const queryString = 'UPDATE watchlists SET name = $2 WHERE (id=$1)';
+    const options = [req.body.watchlist_id, req.body.watchlist_name];
 
     return pg.query(queryString, options)
       .then((res) => res)

@@ -75,7 +75,7 @@ button {
 }
 
 .input-bar {
-  margin: 10px 0px;
+  padding: 10px 0px;
   display: flex;
   justify-content: space-around;
 }
@@ -86,23 +86,6 @@ button {
 }
 
 .index-prices {
-  text-align: center;
-  margin: 0px;
-}
-
-.watchlist-dropdown {
-  height: 21px;
-  width: 150px;
-  margin: 0px 5px;
-}
-
-.new-watchlist {
-  height: 21px;
-  width: 150px;
-  margin: 0px 5px;
-}
-
-.watchlist-update {
   text-align: center;
   margin: 0px;
 }
@@ -151,11 +134,10 @@ button {
   border-bottom: 1px solid;
   border-color: rgb(245, 240, 240);
   padding-bottom: 10px;
+  z-index: 1;
 }
 
 .a-carousel-card {
-  border: 1px 1px 1px 1px solid;
-  border-color: grey;
   font-family: "Amazon Ember", Arial;
   font-size: 13px;
   line-height: 19px;
@@ -169,6 +151,43 @@ button {
   display: inline-block;
   white-space: normal;
   letter-spacing: normal
+}
+
+.temp-card {
+  z-index: 100;
+  background-image: url(https://img.pngio.com/checkmark-clipart-endorsement-black-check-mark-transparent-check-mark-clipart-920_906.png);
+  background-size:160px 80px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 6px 0px;
+  top: 0;
+  left: inherit;
+  text-decoration: none;
+  background-color: #f0f7fc;
+  font-size: 12px;
+  opacity: 75%;
+}
+
+.carousel-remove-wrapper {
+  z-index: 100;
+  background-image: url(https://lh3.googleusercontent.com/proxy/PY_fZFoyfGa3SWlcg-rkMdKnUMRiUWcMlvG5-ueR0vQVBVKbKWTADU2VUBivsJLOPkN53ntEYaXkPgfPY3Ox1wGvDigO3y0r5w);
+  background-size:160px 80px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 6px 0px;
+  top: 0;
+  left: inherit;
+  text-decoration: none;
+  background-color: #f0f7fc;
+  background-color: rgba(212, 94, 73, 0.6);
+  font-size: 12px;
+  opacity: 75%;
 }
 
 .carousel_button {
@@ -392,24 +411,6 @@ button {
   margin-top: 10px;
 }
 
-.carousel-remove {
-  cursor: pointer;
-  position: absolute;
-  z-index: 10;
-  width: inherit;
-  height: 100%;
-  padding: 0px 0px;
-  top: 0;
-  left: inherit;
-  text-decoration: none;
-  border: 1px solid #6daee1;
-  background-color: #f0f7fc;
-  background-color: rgba(240,247,252,.8);
-  border-bottom: 1px dotted #6daee1;
-  font-size: 15px;
-  opacity: 75%;
-}
-
 .removeButton {
   text-decoration: none;
   padding: 0px;
@@ -430,3 +431,107 @@ button {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.edit-button {
+  margin: 0px 5px 0px 15px;
+}
+
+.delete-button {
+  margin: 0px 5px;
+}
+
+.plus-button {
+  margin: 0px 5px 0px 5px;
+}
+
+.create-new {
+  width: 100px;
+  margin: 0px 110px 0px 90px;
+}
+
+.watchlist-input {
+  margin: 0px;
+  width: 175px;
+}
+
+.dropbtn {
+  width: 175px;
+  height: 20px;
+  border-radius: 3px;
+  border-color: #ADB1B8 #A2A6AC #8D9096;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: 500;
+  opacity: 75%;
+  color: black;
+  font-size: 16px;
+  border: none;
+  height: 100%;
+}
+
+.dropdown {
+  margin: 0px;
+  z-index: 100;
+}
+
+.dropdown-content {
+  padding: 0px;
+  right: 0;
+  display: none;
+  margin: 0;
+  background-color: white;
+  width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+.wl-item-edit {
+  width: 70%;
+}
+
+.wl-item-edit:hover {
+  width: 70%;
+  cursor: text;
+}
+
+.wl-item-name {
+  width: 70%;
+}
+
+.wl-item-name:hover {
+  width: 70%;
+  cursor:  pointer;
+}
+
+.wl-item-buttons {
+  width: 30%;
+}
+
+.watchlist-item {
+  padding: 5px 0px 5px 5px;
+  border: solid 1px lightgrey;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  z-index: 100;
+}
+
+.watchlist-list:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  margin: 0;
+  display: block;
+  position: absolute;
+  z-index: 100;
+}
+
+
+
+
+
+
+
+
+

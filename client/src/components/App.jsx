@@ -21,56 +21,29 @@ class App extends React.Component {
       earnInfo: {},
       quote: {},
       user_id: '1',
-      watchlists: [],
       currentWatchlist: 0,
-      watchlistTickers: [],
-      watchlistNames: [],
+      watchlistData: {
+        watchlistTickers: [],
+        watchlistNames: [],
+        isTemp: [],
+      },
     }
 
     this.getFundamentals = this.getFundamentals.bind(this);
     this.getIntraday = this.getIntraday.bind(this);
     this.updateTicker = this.updateTicker.bind(this);
     this.getQuote = this.getQuote.bind(this);
-    this.getWatchlists = this.getWatchlists.bind(this);
     this.getCurrentWatchlist = this.getCurrentWatchlist.bind(this);
     this.getWatchlistData = this.getWatchlistData.bind(this);
     this.deleteSecurity = this.deleteSecurity.bind(this);
     this.checkWatchlist = this.checkWatchlist.bind(this);
-    this.addWatchlist =  this.addWatchlist.bind(this);
+    this.addSecurity = this.addSecurity.bind(this);
   }
 
   componentDidMount() {
     this.getFundamentals()
     this.getIntraday()
     this.getQuote()
-    this.getWatchlists()
-  }
-
-  getWatchlists(watchlistId) {
-    axios.get(`/data/watchlist?user_id=${this.state.user_id}`)
-      .then((response) => {
-        this.setState({
-          watchlists: response.data,
-          currentWatchlist: watchlistId || response.data[0].id
-        }, () => {this.getWatchlistData()})
-      })
-      .catch((err) => err);
-  }
-
-  checkWatchlist(searchTicker) {
-    const isPresent = this.state.watchlistTickers.find(function isTicker(ticker) {
-      return ticker === 'searchTicker';
-    })
-    const newTickers = this.state.watchlistTickers
-    const newCname = this.state.watchlistNames
-    if (isPresent === undefined) {
-      newTickers.unshift(searchTicker)
-      newCname.unshift(this.state.cName)
-      this.setState({
-        watchlistTickers: newTickers,
-        watchlistNames: newCname,
-      })
-    }
   }
 
   getCurrentWatchlist(newWatchlist) {
@@ -79,52 +52,116 @@ class App extends React.Component {
     }, () => {this.getWatchlistData()})
   }
 
-  deleteSecurity(ticker) {
-    axios.delete(`/data/watchlist/security?ticker=${ticker}&watchlist_id=${this.state.currentWatchlist}`)
-    .then(() => {
-      this.getWatchlistData()
-    })
-    .catch((err) => err);
+  updateTicker(newticker) {
+    const newState = {
+      ticker: newticker
+    }
+    const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
+
+    return setAsyncState(newState)
+      .then(() => { this.getFundamentals() })
+      .then(() => { this.getQuote() })
+      .then(() => { this.getIntraday() })
+      .catch((err) => err);
   }
 
-  getWatchlistData() {
-    axios.get(`/data/watchlist/security?watchlist_id=${this.state.currentWatchlist}`)
-      .then((response) => {
-        const tickers = response.data.map((comp) => {return comp.id})
-        const names = response.data.map((comp) => {return comp.name})
+  checkWatchlist(searchTicker) {
+    const checkTicker = (searchTicker) => new Promise((resolve) => {
+      if (this.state.watchlistData.isTemp[0] === true) {
+        this.state.watchlistData.watchlistTickers.shift()
+        this.state.watchlistData.watchlistNames.shift()
+        this.state.watchlistData.isTemp.shift()
+      }
+      const isPresent = this.state.watchlistData.watchlistTickers.indexOf(searchTicker)
+      const newTickers = this.state.watchlistData.watchlistTickers.slice()
+      const newCname = this.state.watchlistData.watchlistNames.slice()
+      const newIsTemp = this.state.watchlistData.isTemp.slice()
+
+      if (isPresent === -1) {
+        newTickers.unshift(searchTicker)
+        newCname.unshift(this.state.cName)
+        newIsTemp.unshift(true)
         this.setState({
-          watchlistTickers: tickers,
-          watchlistNames: names,
-        }, () => {
-          this.updateTicker(this.state.watchlistTickers[0])
+          watchlistData: {
+            watchlistTickers: newTickers,
+            watchlistNames: newCname,
+            isTemp: newIsTemp,
+          },
+        }, resolve)
+      }
+    })
+
+    const newState = {
+      ticker: searchTicker
+    }
+    const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
+
+    return setAsyncState(newState)
+      .then(() => {return this.getFundamentals()})
+      .then(() => {checkTicker(searchTicker)})
+      .then(() => { this.getQuote() })
+      .then(() => { this.getIntraday() })
+  }
+
+  addSecurity(ticker) {
+    const options = {
+      watchlist_id: this.state.currentWatchlist,
+      security_id: ticker,
+      security_name: this.state.cName,
+    }
+
+    return axios.post(`/data/watchlist/security`, options)
+      .catch((res) => res)
+      .catch((err) => err);
+  }
+
+  deleteSecurity(ticker) {
+    return axios.delete(`/data/watchlist/security?ticker=${ticker}&watchlist_id=${this.state.currentWatchlist}`)
+      .then((res) => {
+        const newTickers = this.state.watchlistData.watchlistTickers.slice()
+        const newCname = this.state.watchlistData.watchlistNames.slice()
+        const newIsTemp = this.state.watchlistData.isTemp.slice()
+        const tickerIndex = this.state.watchlistData.watchlistTickers.indexOf(res.data.rows[0].security_id)
+
+        newTickers.splice(tickerIndex, 1)
+        newCname.splice(tickerIndex, 1)
+        newIsTemp.splice(tickerIndex, 1)
+
+        this.setState({
+          watchlistData: {
+            watchlistTickers: newTickers,
+            watchlistNames: newCname,
+            isTemp: newIsTemp,
+          }
         })
       })
       .catch((err) => err);
   }
 
-  updateTicker(newticker) {
-    this.setState({
-      ticker: newticker
-    }, () => {
-      this.getFundamentals();
-      this.getQuote()
-      this.getIntraday();
-    })
+  getWatchlistData() {
+    return axios.get(`/data/watchlist/security?watchlist_id=${this.state.currentWatchlist}`)
+      .then((response) => {
+        const tickers = response.data.map((comp) => {return comp.id})
+        const names = response.data.map((comp) => {return comp.name})
+        const isTemp = response.data.map((comp) => {return false})
+        this.setState({
+          watchlistData: {
+            watchlistTickers: tickers,
+            watchlistNames: names,
+            isTemp: isTemp,
+          }
+        }, () => {
+          if(this.state.watchlistData.watchlistTickers[0]) {
+            this.updateTicker(this.state.watchlistData.watchlistTickers[0])
+          }
 
-    // return new Promise((resolve, reject) => {
-    //   this.doStuff(newticker, (err, data) => {
-    //     console.log()
-    //     if (err) {
-    //       reject(err);
-    //     } else {
-    //       resolve();
-    //     }
-    //   })
-    // })
+        })
+      })
+      .catch((err) => err);
   }
 
   getFundamentals() {
-    axios.get(`/data/fundamentals?ticker=${this.state.ticker}`)
+    return axios.get(`/data/fundamentals?ticker=${this.state.ticker}`)
       .then((response) => {
         this.setState({
           cName: response.data.desInfo.companyName,
@@ -136,7 +173,7 @@ class App extends React.Component {
   }
 
   getQuote() {
-    axios.get(`/data/quote?ticker=${this.state.ticker}`)
+    return axios.get(`/data/quote?ticker=${this.state.ticker}`)
       .then((response) => {
         this.setState({
           quote: response.data,
@@ -145,22 +182,8 @@ class App extends React.Component {
       .catch((err) => err);
   }
 
-  addWatchlist (watchlist) {
-    const options = {
-      watchlist_name: watchlist,
-      user_id: this.state.user_id,
-    }
-    axios.post(`/data/watchlist`, options)
-      .then((response) => {
-        this.setState({
-          currentWatchlist: response.data,
-        }, () => {this.getWatchlists(response.data)})
-      })
-      .catch((err) => err);
-  }
-
   getIntraday() {
-    axios.get(`/data/timeseries?ticker=${this.state.ticker}`)
+    return axios.get(`/data/timeseries?ticker=${this.state.ticker}`)
       .then((response) => {
         this.setState({
           datasets: [
@@ -186,15 +209,14 @@ class App extends React.Component {
           labels: response.data.time,
         })
       })
-      // .then(() => {console.log(this.state)})
       .catch((err) => err);
   }
 
   render() {
     return (
       <div className='master-grid'>
-        <Header updateTicker={this.updateTicker} watchlists={this.state.watchlists} getCurrentWatchlist={this.getCurrentWatchlist} checkWatchlist={this.checkWatchlist} addWatchlist={this.addWatchlist}/>
-        <ChartCarousel labels={this.state.labels} datasets={this.state.datasets} ticker={this.state.ticker} cName={this.state.cName} updateTicker={this.updateTicker} watchlistTickers={this.state.watchlistTickers} watchlistNames={this.state.watchlistNames} deleteSecurity={this.deleteSecurity}/>
+        <Header updateTicker={this.updateTicker} getWatchlistData={this.getWatchlistData} watchlists={this.state.watchlists} getCurrentWatchlist={this.getCurrentWatchlist} checkWatchlist={this.checkWatchlist} user_id={this.state.user_id}/>
+        <ChartCarousel updateTicker={this.updateTicker} addSecurity={this.addSecurity} watchlistData={this.state.watchlistData} deleteSecurity={this.deleteSecurity}/>
 
         <div className='static-grid'>
           <div className='chart-main'>

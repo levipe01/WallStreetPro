@@ -23,5 +23,7 @@ router.post('/watchlist', controllers.addWatchlist);
 
 router.delete('/watchlist', controllers.deleteWatchlist);
 
+router.put('/watchlist', controllers.editWatchlist);
+
 
 module.exports = router;

@@ -34,75 +34,77 @@ class ChartCarousel extends React.Component {
 
     this.toggleRemove = this.toggleRemove.bind(this);
     this.resetCarousel = this.resetCarousel.bind(this);
-    this.goto = this.goto.bind(this);
     this.getTotalPages = this.getTotalPages.bind(this);
     this.getCurrentPage = this.getCurrentPage.bind(this);
     this.getWatchlistData = this.getWatchlistData.bind(this);
   }
 
-  componentDidMount() {
-    this.getWatchlistData()
-  }
-
   componentDidUpdate(prevProps) {
-    if (this.props.watchlistTickers !== prevProps.watchlistTickers) {
+    if (JSON.stringify(this.props.watchlistData.watchlistTickers) !== JSON.stringify(prevProps.watchlistData.watchlistTickers) && JSON.stringify(this.props.watchlistData.watchlistNames) !== JSON.stringify(prevProps.watchlistData.watchlistNames)) {
+
       this.getWatchlistData()
+        .then((data) => {
+          const newState = { carouselData: data }
+          const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
+          return setAsyncState(newState)
+        })
+        .then(() => {
+          this.getTotalPages()
+        })
     }
   }
 
   getWatchlistData() {
-    const stringifiedTickers = JSON.stringify(this.props.watchlistTickers)
-    axios.get(`/data/watchlist/timeseries?watchlist=${stringifiedTickers}`)
-    .then((response) => {
-      const newCarouselData = []
-      if (response.data.length > 0) {
-        let lineColor = ''
-        response.data.forEach((item, index) => {
-          let i = item.price.length - 1
-          while (item.price[i] === null) {i--}
-          if (item.price[0] < item.price[i]) {
-            lineColor = 'rgba(13,236,13,1)'
-          } else {
-            lineColor = 'rgba(236,13,13,1)'
-          }
-          newCarouselData.push({
-            datasets: [
-              {
-                label: this.props.watchlistTickers[index],
-                fill: false,
-                lineTension: 0,
-                backgroundColor: 'rgba(75,192,192,1)',
-                borderColor: lineColor,
-                borderWidth: 2,
-                data: item.price,
-                pointBorderColor: 'rgba(75,192,192,1)',
-                pointBackgroundColor: '#fff',
-                pointBorderWidth: 0,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
-                pointHoverBorderWidth: 2,
-                pointRadius: 0,
-                pointHitRadius: 10,
-              }
-            ],
-            labels: item.time,
-            cName: this.props.watchlistNames[index],
+    this.resetCarousel()
+    const stringifiedTickers = JSON.stringify(this.props.watchlistData.watchlistTickers)
+    return axios.get(`/data/watchlist/timeseries?watchlist=${stringifiedTickers}`)
+      .then((response) => {
+        const newCarouselData = []
+        if (response.data.length > 0) {
+          let lineColor = ''
+          response.data.forEach((item, index) => {
+            let i = item.price.length - 1
+            while (item.price[i] === null) {i--}
+            if (item.price[0] < item.price[i]) {
+              lineColor = 'rgba(13,236,13,1)'
+            } else {
+              lineColor = 'rgba(236,13,13,1)'
+            }
+            newCarouselData.push({
+              datasets: [
+                {
+                  label: this.props.watchlistData.watchlistTickers[index],
+                  fill: false,
+                  lineTension: 0,
+                  backgroundColor: 'rgba(75,192,192,1)',
+                  borderColor: lineColor,
+                  borderWidth: 2,
+                  data: item.price,
+                  pointBorderColor: 'rgba(75,192,192,1)',
+                  pointBackgroundColor: '#fff',
+                  pointBorderWidth: 0,
+                  pointHoverRadius: 5,
+                  pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                  pointHoverBorderColor: 'rgba(220,220,220,1)',
+                  pointHoverBorderWidth: 2,
+                  pointRadius: 0,
+                  pointHitRadius: 10,
+                }
+              ],
+              labels: item.time,
+              cName: this.props.watchlistData.watchlistNames[index],
+              isTemp: this.props.watchlistData.isTemp[index],
+            })
           })
-        })
-      }
-      return newCarouselData
+        }
+        return newCarouselData
     })
-    .then((data) => {
-      this.setState({
-        carouselData: data,
-      })
-    })
-    .catch((err) => console.log(err));
+
+    .catch((err) => err);
   }
 
   resetCarousel() {
-    this.goto();
+    this.carousel.goTo(Number(0));
     this.setState({
       currentPage: 1,
       currentIndex: 0,
@@ -111,17 +113,25 @@ class ChartCarousel extends React.Component {
 
   getCurrentPage(currentItem, nextItem) {
     const newCurrentPage = Math.ceil(nextItem.index / this.state.itemsPerPage) + 1;
+
     this.setState({
       currentIndex: nextItem.index,
       currentPage: newCurrentPage,
     });
   }
 
-  goto() { this.carousel.goTo(Number(0)); }
-
   getTotalPages(currentBreakPoint) {
-    const itemsPerPage = currentBreakPoint.itemsToShow
-    const newTotalPages = Math.ceil(this.props.watchlistTickers.length / itemsPerPage);
+    const backupBP = () => {
+      let i = 0
+      while (this.breakPoints[i].width < window.innerWidth) {
+        i++
+      }
+      return this.breakPoints[i].itemsToShow - 2
+    }
+    const itemsPerPage = currentBreakPoint ? currentBreakPoint.itemsToShow : backupBP()
+    const newTotalPages = Math.ceil(this.props.watchlistData.watchlistTickers.length / itemsPerPage);
+
+
     this.setState({
       totalPages: newTotalPages,
       itemsPerPage,
@@ -131,6 +141,7 @@ class ChartCarousel extends React.Component {
 
   toggleRemove() {
     const newState = !this.state.removeVisible;
+
     this.setState({
       removeVisible: newState,
     });
@@ -143,14 +154,13 @@ class ChartCarousel extends React.Component {
     };
 
     return (
-
       <div className='chart-carousel'>
         <Carousel itemsToShow={8} ref={(ref) => { this.carousel = ref; }} renderArrow={myArrow}
            breakPoints={this.breakPoints} onResize={this.getTotalPages} onNextStart={this.getCurrentPage}
            transitionMs={900} itemsToScroll={8} pagination={false} onPrevStart={this.getCurrentPage}>
           {
             this.state.carouselData.length > 0
-              ? this.state.carouselData.map((company) => <Chart labels={company.labels} datasets={company.datasets} cName={company.cName} isMini={true} updateTicker={this.props.updateTicker} removeVisible={this.state.removeVisible} deleteSecurity={this.props.deleteSecurity}/>)
+              ? this.state.carouselData.map((company) => <Chart addSecurity={this.props.addSecurity} isTemp={company.isTemp} key={company.datasets[0].label} labels={company.labels} datasets={company.datasets} cName={company.cName} isMini={true} updateTicker={this.props.updateTicker} removeVisible={this.state.removeVisible} deleteSecurity={this.props.deleteSecurity}/>)
               : <div>Search to add new securities</div>
           }
 

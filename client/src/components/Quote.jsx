@@ -27,7 +27,7 @@ const Quote = ({quote}) => {
     lastTradeTime = moment(quote.lastTradeTime).format('LLLL')
     lowTime = moment(quote.lowTime).format('h:mm A')
     highTime = moment(quote.highTime).format('h:mm A')
-    rtQuote = quote.iexRealtimePrice.toFixed(2)
+    rtQuote = quote.isUSMarketOpen ? quote.iexRealtimePrice.toFixed(2) : quote.iexClose.toFixed(2)
     change = quote.change.toFixed(2)
     changePercent = (quote.changePercent * 100).toFixed(2)
     high = quote.high.toFixed(2)
@@ -56,6 +56,7 @@ const Quote = ({quote}) => {
       </div>
 
       <table className='quote-table'>
+        <tbody>
         {
           quote.open
           && <tr>
@@ -95,6 +96,7 @@ const Quote = ({quote}) => {
           <td className='table-field'><b>PE Ratio: </b></td>
           <td>{quote.peRatio}</td>
         </tr>
+        </tbody>
       </table>
       <div className='iex-cloud'>
         <a href="https://iexcloud.io">IEX Cloud</a>
