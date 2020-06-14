@@ -13,15 +13,17 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      user_id: '1',
       ticker: 'AAPL',
       cName: '',
+      currentWatchlist: 0,
       desInfo: {},
-      labels: [],
-      datasets: [],
       earnInfo: {},
       quote: {},
-      user_id: '1',
-      currentWatchlist: 0,
+      chartData: {
+        labels: [],
+        prices: [],
+      },
       watchlistData: {
         watchlistTickers: [],
         watchlistNames: [],
@@ -49,7 +51,7 @@ class App extends React.Component {
   getCurrentWatchlist(newWatchlist) {
     this.setState({
       currentWatchlist: newWatchlist,
-    }, () => {this.getWatchlistData()})
+    }, () => { this.getWatchlistData() })
   }
 
   updateTicker(newticker) {
@@ -87,13 +89,11 @@ class App extends React.Component {
             watchlistNames: newCname,
             isTemp: newIsTemp,
           },
-        }, resolve)
+        })
       }
     })
 
-    const newState = {
-      ticker: searchTicker
-    }
+    const newState = { ticker: searchTicker }
     const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
 
     return setAsyncState(newState)
@@ -111,7 +111,7 @@ class App extends React.Component {
     }
 
     return axios.post(`/data/watchlist/security`, options)
-      .catch((res) => res)
+      .then((res) => res)
       .catch((err) => err);
   }
 
@@ -141,20 +141,16 @@ class App extends React.Component {
   getWatchlistData() {
     return axios.get(`/data/watchlist/security?watchlist_id=${this.state.currentWatchlist}`)
       .then((response) => {
-        const tickers = response.data.map((comp) => {return comp.id})
-        const names = response.data.map((comp) => {return comp.name})
-        const isTemp = response.data.map((comp) => {return false})
         this.setState({
           watchlistData: {
-            watchlistTickers: tickers,
-            watchlistNames: names,
-            isTemp: isTemp,
+            watchlistTickers: response.data.map((comp) => { return comp.id }),
+            watchlistNames: response.data.map((comp) => { return comp.name }),
+            isTemp: response.data.map((comp) => { return false }),
           }
         }, () => {
-          if(this.state.watchlistData.watchlistTickers[0]) {
+          if (this.state.watchlistData.watchlistTickers[0]) {
             this.updateTicker(this.state.watchlistData.watchlistTickers[0])
           }
-
         })
       })
       .catch((err) => err);
@@ -175,9 +171,7 @@ class App extends React.Component {
   getQuote() {
     return axios.get(`/data/quote?ticker=${this.state.ticker}`)
       .then((response) => {
-        this.setState({
-          quote: response.data,
-        })
+        this.setState({ quote: response.data })
       })
       .catch((err) => err);
   }
@@ -186,28 +180,11 @@ class App extends React.Component {
     return axios.get(`/data/timeseries?ticker=${this.state.ticker}`)
       .then((response) => {
         this.setState({
-          datasets: [
-            {
-              label: this.state.ticker,
-              fill: true,
-              lineTension: 0,
-              backgroundColor: 'rgba(75,192,192,0.25)',
-              borderColor: 'rgba(0,0,0,1)',
-              borderWidth: 2,
-              data: response.data.price,
-              pointBorderColor: 'rgba(75,192,192,1)',
-              pointBackgroundColor: '#fff',
-              pointBorderWidth: 0,
-              pointHoverRadius: 5,
-              pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-              pointHoverBorderColor: 'rgba(220,220,220,1)',
-              pointHoverBorderWidth: 2,
-              pointRadius: 0,
-              pointHitRadius: 10,
-            }
-          ],
-          labels: response.data.time,
-        }, () => {console.log(this.state)})
+          chartData: {
+            prices: response.data.price,
+            labels: response.data.time,
+          }
+        })
       })
       .catch((err) => err);
   }
@@ -220,7 +197,7 @@ class App extends React.Component {
 
         <div className='static-grid'>
           <div className='chart-main'>
-            <Chart labels={this.state.labels} datasets={this.state.datasets} cName={this.state.cName} isMini={false}/>
+            <Chart chartData={this.state.chartData} ticker={this.state.ticker} cName={this.state.cName} isMini={false}/>
           </div>
           <Quote quote={this.state.quote}/>
         </div>

@@ -85,7 +85,7 @@ class WatchlistItem extends React.Component {
                 </button>
           }
           <button className='delete-button' onClick={this.deleteWatchlist}>
-            <i onClick={this.deleteWatchlist} className="fa fa-trash"></i>
+            <i className="fa fa-trash"></i>
           </button>
         </div>
       </li>

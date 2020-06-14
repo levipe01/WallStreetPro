@@ -1,5 +1,5 @@
 import React from 'react';
-import {Collapse} from 'react-collapse';
+import { Collapse } from 'react-collapse';
 import PropTypes from 'prop-types';
 
 class Descripton extends React.Component {

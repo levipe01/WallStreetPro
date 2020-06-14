@@ -137,10 +137,12 @@ module.exports = {
   },
 
   deleteWatchlist: (req) => {
-    const queryString = 'DELETE FROM watchlists WHERE (id=$1) RETURNING *';
+    const queryString1 = 'DELETE FROM watchlists_securities WHERE (watchlist_id=$1) RETURNING *';
+    const queryString2 = 'DELETE FROM watchlists WHERE (id=$1) RETURNING *';
     const options = [req.query.watchlist_id];
 
-    return pg.query(queryString, options)
+    return pg.query(queryString1, options)
+      .then((data) => { return pg.query(queryString2, options) })
       .then((res) => res)
       .catch((err) => err);
   },

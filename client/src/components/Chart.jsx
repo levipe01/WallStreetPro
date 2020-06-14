@@ -1,5 +1,5 @@
 import React from 'react';
-import {Line} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 
 class Chart extends React.Component {
@@ -8,106 +8,105 @@ class Chart extends React.Component {
 
     this.state = {
       isTemp: false,
-      chartData: {
-        labels: [],
-        datasets: [],
-      }
     };
 
     this.toggleIsTemp = this.toggleIsTemp.bind(this);
   }
 
-  toggleIsTemp() {
-    const newIsTemp = !isTemp
-    this.setState({
-      isTemp: newIsTemp
-    })
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.datasets.length !== prevProps.datasets.length) {
-      this.setState({
-        isTemp: this.props.isTemp,
-        chartData: {
-          labels: this.props.labels,
-          datasets: this.props.datasets,
-        }
-      })
-    }
-  }
-
-
   componentDidMount() {
     this.setState({
       isTemp: this.props.isTemp,
-      chartData: {
-        labels: this.props.labels,
-        datasets: this.props.datasets,
-      }
     })
   }
 
+  toggleIsTemp() {
+    const newIsTemp = !this.state.isTemp
+    if (this.state.isTemp) {
+      this.setState({
+        isTemp: newIsTemp
+      }, () => {this.forceUpdate()})
+    }
+  }
+
   render() {
-    const {labels, datasets, cName, isMini, updateTicker, removeVisible, deleteSecurity, addSecurity, isTemp} = this.props;
+    const { chartData, cName, isMini, ticker, updateTicker, removeVisible, deleteSecurity, addSecurity, isTemp } = this.props;
 
+    let xTicks, yGridLines, yTicks, fill = true;
+    let wrapperId, clickHandler, handleClick = null
+    let cardClassName, card_overlay_text, removeWrapperClassName = ''
     let headerFontSize = 25;
-    let xTicks = true;
-    let yGridLines = true;
-    let yTicks = true;
-    let wrapperId = null
-    let clickHandler = null
-    let cardClassName = ''
-    let card_overlay_text = ''
-    let handleClick = null
-    let removeWrapperClassName = ''
+    let lineColor = 'rgba(0,0,0,1)'
+    let pointBackgroundColor = '#fff'
 
-    if(isMini) {
-      clickHandler = (event) => {
-        updateTicker(event.currentTarget.id);
-      }
+    if (isMini) {
+      xTicks, yGridLines, yTicks, fill = false;
+      wrapperId = chartData.ticker
+      clickHandler = (event) => { updateTicker(event.currentTarget.id) }
+      cardClassName = 'a-carousel-card'
+      headerFontSize = 15;
+      pointBackgroundColor = 'rgba(75,192,192,1)'
+
+      let i = chartData.prices.length - 1
+      while (chartData.prices[i] === null) { i-- }
+      lineColor = (chartData.prices[0] < chartData.prices[i]) ? 'rgba(13,236,13,1)' : 'rgba(236,13,13,1)'
+
       if (removeVisible) {
         clickHandler = null
         removeWrapperClassName = 'carousel-remove-wrapper'
-        handleClick = (e) => {
-          deleteSecurity(String(e.currentTarget.id))
-        }
+        handleClick = (e) => { deleteSecurity(String(e.currentTarget.id)) }
       }
-      if (isTemp) {
+
+      if (this.state.isTemp) {
         removeWrapperClassName = 'temp-card'
         handleClick = (e) => {
-          toggleIsTemp()
+          this.toggleIsTemp()
           addSecurity(String(e.currentTarget.id))
         }
       }
-      cardClassName = 'a-carousel-card'
-
-      headerFontSize = 15;
-      xTicks = false;
-      yGridLines = false;
-      yTicks = false;
-      wrapperId = datasets[0].label
     }
 
     return (
       <div className={removeWrapperClassName} id={wrapperId} onClick={handleClick}>
         <div className={cardClassName} id={wrapperId} onClick={clickHandler}>
           <Line
-          data={this.state.chartData}
+          data={{
+            labels: chartData.labels,
+            datasets: [
+              {
+                label: ticker || chartData.ticker,
+                fill: fill,
+                lineTension: 0,
+                backgroundColor: 'rgba(75,192,192,0.25)',
+                borderColor: lineColor,
+                borderWidth: 2,
+                data: chartData.prices,
+                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBackgroundColor: pointBackgroundColor,
+                pointBorderWidth: 0,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBorderWidth: 2,
+                pointRadius: 0,
+                pointHitRadius: 10,
+              }
+            ],
+          }}
           options={{
             title:{
-              display:true,
-              text:cName,
+              display: true,
+              text: cName || chartData.cName,
               fontSize: headerFontSize,
               fontColor: 'black',
             },
-            spanGaps:true,
+            spanGaps: true,
             legend:{
-              display:false,
+              display: false,
             },
             scales: {
               xAxes: [{
                   gridLines: {
-                      display:false
+                      display: false
                   },
                   ticks: {
                     display: xTicks
@@ -115,14 +114,14 @@ class Chart extends React.Component {
               }],
               yAxes: [{
                 gridLines: {
-                    display:yGridLines
+                    display: yGridLines
                 },
                 ticks: {
                   display: yTicks
                 }
             }],
             },
-            scaleShowLabels : false
+            scaleShowLabels: false
           }}
           />
           </div>
@@ -133,95 +132,4 @@ class Chart extends React.Component {
 
 export default Chart;
 
-
-// const Chart = ({labels, datasets, cName, isMini, updateTicker, removeVisible, deleteSecurity, addSecurity, isTemp}) => {
-
-//   const chartData = {
-//     labels: labels,
-//     datasets: datasets
-//   }
-
-//   const toggleIsTemp = () => {
-//     isTemp = !isTemp
-//   }
-
-//   let headerFontSize = 25;
-//   let xTicks = true;
-//   let yGridLines = true;
-//   let yTicks = true;
-//   let wrapperId = null
-//   let clickHandler = null
-//   let cardClassName = ''
-//   let card_overlay_text = ''
-//   let handleClick = null
-//   let removeWrapperClassName = ''
-
-//   if(isMini) {
-//     clickHandler = (event) => {
-//       updateTicker(event.currentTarget.id);
-//     }
-//     if (removeVisible) {
-//       clickHandler = null
-//       removeWrapperClassName = 'carousel-remove-wrapper'
-//       handleClick = (e) => {
-//         deleteSecurity(String(e.currentTarget.id))
-//       }
-//     }
-//     if (isTemp) {
-//       removeWrapperClassName = 'temp-card'
-//       handleClick = (e) => {
-//         toggleIsTemp()
-//         addSecurity(String(e.currentTarget.id))
-//       }
-//     }
-//     cardClassName = 'a-carousel-card'
-
-//     headerFontSize = 15;
-//     xTicks = false;
-//     yGridLines = false;
-//     yTicks = false;
-//     wrapperId = datasets[0].label
-//   }
-
-//   return (
-//     <div className={removeWrapperClassName} id={wrapperId} onClick={handleClick}>
-//       <div className={cardClassName} id={wrapperId} onClick={clickHandler}>
-//         <Line
-//         data={chartData}
-//         options={{
-//           title:{
-//             display:true,
-//             text:cName,
-//             fontSize: headerFontSize,
-//             fontColor: 'black',
-//           },
-//           spanGaps:true,
-//           legend:{
-//             display:false,
-//           },
-//           scales: {
-//             xAxes: [{
-//                 gridLines: {
-//                     display:false
-//                 },
-//                 ticks: {
-//                   display: xTicks
-//                 }
-//             }],
-//             yAxes: [{
-//               gridLines: {
-//                   display:yGridLines
-//               },
-//               ticks: {
-//                 display: yTicks
-//               }
-//           }],
-//           },
-//           scaleShowLabels : false
-//         }}
-//         />
-//         </div>
-//     </div>
-//   );
-// }
 
