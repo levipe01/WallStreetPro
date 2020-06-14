@@ -207,7 +207,7 @@ class App extends React.Component {
             }
           ],
           labels: response.data.time,
-        })
+        }, () => {console.log(this.state)})
       })
       .catch((err) => err);
   }

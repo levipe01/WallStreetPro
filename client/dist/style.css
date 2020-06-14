@@ -174,7 +174,7 @@ button {
 .carousel-remove-wrapper {
   z-index: 100;
   background-image: url(https://lh3.googleusercontent.com/proxy/PY_fZFoyfGa3SWlcg-rkMdKnUMRiUWcMlvG5-ueR0vQVBVKbKWTADU2VUBivsJLOPkN53ntEYaXkPgfPY3Ox1wGvDigO3y0r5w);
-  background-size:160px 80px;
+  background-size: 160px 80px;
   background-repeat: no-repeat;
   cursor: pointer;
   position: absolute;
@@ -433,7 +433,7 @@ button {
 }
 
 .edit-button {
-  margin: 0px 5px 0px 15px;
+  margin: 0px 2.5px 0px 15px;
 }
 
 .delete-button {
@@ -441,7 +441,7 @@ button {
 }
 
 .plus-button {
-  margin: 0px 5px 0px 5px;
+  margin: 0px 2.5px 0px 5px;
 }
 
 .create-new {
