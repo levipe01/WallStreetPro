@@ -3,7 +3,7 @@ import moment from "moment";
 
 
 const Quote = ({ quote }) => {
-  let lowTime, highTime, rtQuote, change, changePercent, high, low, open, lastTradeTime = '';
+  let lowTime, highTime, rtQuote, change, changePercent, ytdChange, high, low, open, lastTradeTime = '';
   let marketCap, volume = 0;
   let divStyle = {};
 
@@ -24,6 +24,7 @@ const Quote = ({ quote }) => {
     low = quote.low.toFixed(2)
     marketCap = thousands_separators((quote.marketCap / 1000000000).toFixed(2))
     volume = thousands_separators(quote.avgTotalVolume)
+    ytdChange = (quote.ytdChange * 100).toFixed(2)
   }
 
   if (quote.open) {
@@ -46,7 +47,7 @@ const Quote = ({ quote }) => {
           <div className='quote-time'>{lastTradeTime}</div>
         </div>
 
-        <table className='quote-table'>
+        <table cellSpacing="0" cellPadding="0" className='quote-table'>
           <tbody>
           {
             quote.open
@@ -64,12 +65,12 @@ const Quote = ({ quote }) => {
             <td>${low} <i>({lowTime})</i></td>
           </tr>
           <tr>
-            <td className='table-field'><b>Volume: </b></td>
-            <td>{volume}</td>
-          </tr>
-          <tr>
             <td className='table-field'><b>Prev: </b></td>
             <td>${quote.previousClose}</td>
+          </tr>
+          <tr>
+            <td className='table-field'><b>Volume: </b></td>
+            <td>{volume}</td>
           </tr>
           <tr>
             <td className='table-field'><b>52-Wk High: </b></td>
@@ -78,6 +79,10 @@ const Quote = ({ quote }) => {
           <tr>
             <td className='table-field'><b>52-Wk Low: </b></td>
             <td>${quote.week52Low}</td>
+          </tr>
+          <tr>
+            <td className='table-field'><b>YTD Chng: </b></td>
+            <td>{ytdChange}%</td>
           </tr>
           <tr>
             <td className='table-field'><b>Market Cap: </b></td>

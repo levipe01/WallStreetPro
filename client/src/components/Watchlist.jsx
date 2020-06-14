@@ -69,7 +69,7 @@ class Watchlist extends React.Component {
     });
   }
 
-  // editWatchlists(action, id, name) {
+  // editWatchlists(action, id, name) {             //possibly used for re-rendering watchlists without API Call
   //   let newWatchlists = this.state.watchlists.splice()
   //   const watchlistIndex = this.state.watchlists.indexOf(id)
   //   if (action === 'delete') {

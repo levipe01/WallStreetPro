@@ -29,7 +29,7 @@ class Earnings extends React.Component {
           this.props.earnInfo.earnings
             &&
             <Collapse isOpened={this.state.displayContent}>
-              <table className='earnings-table'>
+              <table cellSpacing="0" cellPadding="0" className='earnings-table'>
                 <tbody>
                   <tr>
                     <th></th>

@@ -24,22 +24,22 @@ class Chart extends React.Component {
     if (this.state.isTemp) {
       this.setState({
         isTemp: newIsTemp
-      }, () => {this.forceUpdate()})
+      })
     }
   }
 
   render() {
     const { chartData, cName, isMini, ticker, updateTicker, removeVisible, deleteSecurity, addSecurity, isTemp } = this.props;
 
-    let xTicks, yGridLines, yTicks, fill = true;
-    let wrapperId, clickHandler, handleClick = null
+    let xTicks = true, yGridLines = true, yTicks = true, fill = true;
+    let wrapperId = null, clickHandler = null, handleClick = null
     let cardClassName, card_overlay_text, removeWrapperClassName = ''
     let headerFontSize = 25;
     let lineColor = 'rgba(0,0,0,1)'
     let pointBackgroundColor = '#fff'
 
     if (isMini) {
-      xTicks, yGridLines, yTicks, fill = false;
+      xTicks = false, yGridLines = false, yTicks = false, fill = false;
       wrapperId = chartData.ticker
       clickHandler = (event) => { updateTicker(event.currentTarget.id) }
       cardClassName = 'a-carousel-card'

@@ -1,11 +1,16 @@
 body {
   margin: 0px 20px;
+  min-width: 1300px;
 }
 
 p {
   margin: 0px;
 }
 
+table {
+  margin: auto;
+
+}
 .logo-wrapper {
   text-align: center;
   display: inline-flex;
@@ -260,7 +265,7 @@ button {
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  width:50%;
+  width:60%;
   /* color: rgb(77, 75, 75); */
   margin: 5px;
 }
@@ -272,7 +277,7 @@ button {
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  width:50%;
+  width:40%;
   /* color: rgb(77, 75, 75); */
   margin: 5px;
 }
