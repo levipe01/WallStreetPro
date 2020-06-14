@@ -125,26 +125,24 @@ class App extends React.Component {
   }
 
   deleteSecurity(ticker) {
-    return axios.delete(`/data/watchlist/security?ticker=${ticker}&watchlist_id=${this.state.currentWatchlist}`)
-      .then((res) => {
-        const newTickers = this.state.watchlistData.watchlistTickers.slice()
-        const newCname = this.state.watchlistData.watchlistNames.slice()
-        const newIsTemp = this.state.watchlistData.isTemp.slice()
-        const tickerIndex = this.state.watchlistData.watchlistTickers.indexOf(res.data.rows[0].security_id)
+    const tickerIndex = this.state.watchlistData.watchlistTickers.indexOf(ticker)
+    const newTickers = this.state.watchlistData.watchlistTickers.slice()
+    const newCname = this.state.watchlistData.watchlistNames.slice()
+    const newIsTemp = this.state.watchlistData.isTemp.slice()
 
-        newTickers.splice(tickerIndex, 1)
-        newCname.splice(tickerIndex, 1)
-        newIsTemp.splice(tickerIndex, 1)
+    newTickers.splice(tickerIndex, 1)
+    newCname.splice(tickerIndex, 1)
+    newIsTemp.splice(tickerIndex, 1)
 
-        this.setState({
-          watchlistData: {
-            watchlistTickers: newTickers,
-            watchlistNames: newCname,
-            isTemp: newIsTemp,
-          }
-        })
-      })
-      .catch((err) => err);
+    this.setState({
+      watchlistData: {
+        watchlistTickers: newTickers,
+        watchlistNames: newCname,
+        isTemp: newIsTemp,
+      }
+    }, () => {
+      axios.delete(`/data/watchlist/security?ticker=${ticker}&watchlist_id=${this.state.currentWatchlist}`)
+    })
   }
 
   getWatchlistData() {
