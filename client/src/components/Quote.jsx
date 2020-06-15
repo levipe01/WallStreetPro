@@ -1,40 +1,51 @@
 import React from 'react';
-import moment from "moment";
+import moment from 'moment';
+import PropTypes from 'prop-types';
 
 
 const Quote = ({ quote }) => {
-  let lowTime, highTime, rtQuote, change, changePercent, ytdChange, high, low, open, lastTradeTime = '';
-  let marketCap, volume = 0;
+  let lowTime = '';
+  let highTime = '';
+  let rtQuote = '';
+  let change = '';
+  let changePercent = '';
+  let ytdChange = '';
+  let high = '';
+  let low = '';
+  let open = '';
+  let lastTradeTime = '';
+  let marketCap = 0;
+  let volume = 0;
   let divStyle = {};
 
-  function thousands_separators(num) {
-    var num_parts = num.toString().split(".");
-    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return num_parts.join(".");
+  function thousandsSeparators(num) {
+    const numParts = num.toString().split('.');
+    numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return numParts.join('.');
   }
 
   if (quote.lowTime) {
-    lastTradeTime = moment(quote.lastTradeTime).format('LLLL')
-    lowTime = moment(quote.lowTime).format('h:mm A')
-    highTime = moment(quote.highTime).format('h:mm A')
-    rtQuote = quote.isUSMarketOpen ? quote.iexRealtimePrice.toFixed(2) : quote.iexClose.toFixed(2)
-    change = quote.change.toFixed(2)
-    changePercent = (quote.changePercent * 100).toFixed(2)
-    high = quote.high.toFixed(2)
-    low = quote.low.toFixed(2)
-    marketCap = thousands_separators((quote.marketCap / 1000000000).toFixed(2))
-    volume = thousands_separators(quote.avgTotalVolume)
-    ytdChange = (quote.ytdChange * 100).toFixed(2)
+    lastTradeTime = moment(quote.lastTradeTime).format('LLLL');
+    lowTime = moment(quote.lowTime).format('h:mm A');
+    highTime = moment(quote.highTime).format('h:mm A');
+    rtQuote = quote.isUSMarketOpen ? quote.iexRealtimePrice.toFixed(2) : quote.iexClose.toFixed(2);
+    change = quote.change.toFixed(2);
+    changePercent = (quote.changePercent * 100).toFixed(2);
+    high = quote.high.toFixed(2);
+    low = quote.low.toFixed(2);
+    marketCap = thousandsSeparators((quote.marketCap / 1000000000).toFixed(2));
+    volume = thousandsSeparators(quote.avgTotalVolume);
+    ytdChange = (quote.ytdChange * 100).toFixed(2);
   }
 
   if (quote.open) {
-    open = quote.open.toFixed(2)
+    open = quote.open.toFixed(2);
   }
 
   if (quote.change > 0) {
-    divStyle = { color: 'rgba(13,236,13,1)' }
+    divStyle = { color: 'rgba(13,236,13,1)' };
   } else if (quote.change < 0) {
-    divStyle = { color: 'rgba(236,13,13,1)' }
+    divStyle = { color: 'rgba(236,13,13,1)' };
   }
 
   return (
@@ -99,6 +110,29 @@ const Quote = ({ quote }) => {
         </div>
       </div>
   );
-}
+};
+
+Quote.propTypes = {
+  quote: PropTypes.shape({
+    peRatio: PropTypes.number,
+    week52Low: PropTypes.number,
+    week52High: PropTypes.number,
+    previousClose: PropTypes.number,
+    open: PropTypes.number,
+    high: PropTypes.number,
+    low: PropTypes.number,
+    change: PropTypes.number,
+    changePercent: PropTypes.number,
+    ytdChange: PropTypes.number,
+    avgTotalVolume: PropTypes.number,
+    marketCap: PropTypes.number,
+    iexRealtimePrice: PropTypes.number,
+    iexClose: PropTypes.number,
+    isUSMarketOpen: PropTypes.bool,
+    lowTime: PropTypes.number,
+    highTime: PropTypes.number,
+    lastTradeTime: PropTypes.number,
+  }),
+};
 
 export default Quote;

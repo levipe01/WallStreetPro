@@ -8,7 +8,7 @@ router.get('/quote/', controllers.getQuote);
 router.get('/fundamentals/', controllers.getFundamentals);
 
 
-router.get('/watchlist/timeseries', controllers.getWatchlistTimeseries)
+router.get('/watchlist/timeseries', controllers.getWatchlistTimeseries);
 
 router.post('/watchlist/security', controllers.addSecurity);
 

@@ -6,13 +6,17 @@
  */
 
 module.exports = {
-  'extends': [
-    "airbnb-base",
-    'plugin:react/recommended',
-  ],
-  "parser": "babel-eslint",
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  };
+                  'extends': [
+                    "airbnb-base",
+                    'plugin:react/recommended',
+                  ],
+                  "rules": {
+                    "no-console": "off",
+                    'max-len': ["error", { "code": 130 }],
+                  },
+                  "parser": "babel-eslint",
+                  "env": {
+                    "browser": true,
+                    "node": true
+                  },
+                  };

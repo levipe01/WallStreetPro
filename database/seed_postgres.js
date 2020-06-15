@@ -1,7 +1,7 @@
 const db = require('./postgres_db.js');
 
 const createWatchlistTable = () => {
-  console.log('seeding...')
+  console.log('seeding...');
   const sqlStringCreate = `CREATE TABLE watchlists (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -101,12 +101,3 @@ createUserTable()
   .then(createWatchlistTable)
   .then(createSecuritiesTable)
   .then(createWatchlistSecuritiesTable);
-
-
-
-
-
-
-
-
-

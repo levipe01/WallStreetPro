@@ -12,11 +12,11 @@ module.exports = {
         model.getFundamentals(req.query.ticker)
           .then((response) => {
             res.status(200).json(response);
-            const data = response
+            const data = response;
             return data;
           })
           .then((data) => {
-            redis.addFundamentals(data)
+            redis.addFundamentals(data);
           })
           .catch(() => {
             res.status(404).json('no data found');

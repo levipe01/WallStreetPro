@@ -1,8 +1,7 @@
 import React from 'react';
-import {Collapse} from 'react-collapse';
 import PropTypes from 'prop-types';
 import Carousel, { consts } from 'react-elastic-carousel';
-import Chart from './Chart.jsx'
+import Chart from './Chart.jsx';
 
 const axios = require('axios').default;
 
@@ -40,25 +39,24 @@ class ChartCarousel extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (JSON.stringify(this.props.watchlistData.watchlistTickers) !== JSON.stringify(prevProps.watchlistData.watchlistTickers) && JSON.stringify(this.props.watchlistData.watchlistNames) !== JSON.stringify(prevProps.watchlistData.watchlistNames)) {
-
+    if (JSON.stringify(this.props.watchlistData.watchlistTickers) !== JSON.stringify(prevProps.watchlistData.watchlistTickers)
+        && JSON.stringify(this.props.watchlistData.watchlistNames) !== JSON.stringify(prevProps.watchlistData.watchlistNames)) {
       this.getWatchlistData()
         .then((data) => {
-          const newState = { carouselData: data }
-          const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve))
-          return setAsyncState(newState)
+          const setAsyncState = (newState) => new Promise((resolve) => this.setState(newState, resolve));
+          return setAsyncState({ carouselData: data });
         })
-        .then(() => { this.getTotalPages() })
+        .then(() => { this.getTotalPages(); })
         .catch((err) => err);
     }
   }
 
   getWatchlistData() {
-    this.resetCarousel()
-    const stringifiedTickers = JSON.stringify(this.props.watchlistData.watchlistTickers)
+    this.resetCarousel();
+    const stringifiedTickers = JSON.stringify(this.props.watchlistData.watchlistTickers);
     return axios.get(`/data/watchlist/timeseries?watchlist=${stringifiedTickers}`)
       .then((response) => {
-        let newCarouselData = []
+        const newCarouselData = [];
         if (response.data.length > 0) {
           response.data.forEach((item, index) => {
             newCarouselData.push({
@@ -69,12 +67,12 @@ class ChartCarousel extends React.Component {
                 cName: this.props.watchlistData.watchlistNames[index],
                 isTemp: this.props.watchlistData.isTemp[index],
               },
-            })
-          })
+            });
+          });
         }
-        return newCarouselData
-    })
-    .catch((err) => err);
+        return newCarouselData;
+      })
+      .catch((err) => err);
   }
 
   resetCarousel() {
@@ -95,11 +93,11 @@ class ChartCarousel extends React.Component {
 
   getTotalPages(currentBreakPoint) {
     const backupBP = () => {
-      let i = 0
-      while (this.breakPoints[i].width < window.innerWidth) { i++ }
-      return this.breakPoints[i].itemsToShow - 2
-    }
-    const itemsPerPage = currentBreakPoint ? currentBreakPoint.itemsToShow : backupBP()
+      let i = 0;
+      while (this.breakPoints[i].width < window.innerWidth) { i += 1; }
+      return this.breakPoints[i].itemsToShow - 2;
+    };
+    const itemsPerPage = currentBreakPoint ? currentBreakPoint.itemsToShow : backupBP();
     const newTotalPages = Math.ceil(this.props.watchlistData.watchlistTickers.length / itemsPerPage);
 
     this.setState({
@@ -117,6 +115,12 @@ class ChartCarousel extends React.Component {
   }
 
   render() {
+    const {
+      addSecurity,
+      updateTicker,
+      deleteSecurity,
+    } = this.props;
+
     const myArrow = ({ type, onClick }) => {
       const pointer = type === consts.PREV ? 'button-left' : 'button-right';
       return (<button className="carousel_button" onClick={onClick}><div className={pointer}></div></button>);
@@ -129,7 +133,9 @@ class ChartCarousel extends React.Component {
            transitionMs={900} itemsToScroll={8} pagination={false} onPrevStart={this.getCurrentPage}>
           {
             this.state.carouselData.length > 0
-              ? this.state.carouselData.map((company) => <Chart addSecurity={this.props.addSecurity} isTemp={company.chartData.isTemp} key={company.chartData.ticker} chartData={company.chartData} cName={company.cName} isMini={true} updateTicker={this.props.updateTicker} removeVisible={this.state.removeVisible} deleteSecurity={this.props.deleteSecurity}/>)
+              ? this.state.carouselData.map((company) => <Chart isTemp={company.chartData.isTemp} cName={company.cName}
+              key={company.chartData.ticker} chartData={company.chartData} addSecurity={addSecurity} isMini={true}
+              updateTicker={updateTicker} removeVisible={this.state.removeVisible} deleteSecurity={deleteSecurity}/>)
               : <div className='empty-carousel'>Search to add new securities</div>
           }
         </Carousel>
@@ -158,5 +164,15 @@ class ChartCarousel extends React.Component {
   }
 }
 
+ChartCarousel.propTypes = {
+  addSecurity: PropTypes.func.isRequired,
+  updateTicker: PropTypes.func.isRequired,
+  deleteSecurity: PropTypes.func.isRequired,
+  watchlistData: PropTypes.shape({
+    watchlistTickers: PropTypes.arrayOf(PropTypes.string.isRequired),
+    watchlistNames: PropTypes.arrayOf(PropTypes.string.isRequired),
+    isTemp: PropTypes.arrayOf(PropTypes.bool.isRequired),
+  }).isRequired,
+};
 
 export default ChartCarousel;

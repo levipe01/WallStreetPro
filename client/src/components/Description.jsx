@@ -13,36 +13,38 @@ class Descripton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(event){
+  handleClick(event) {
     event.preventDefault();
-    let newState = !this.state.displayContent
+    const newState = !this.state.displayContent;
     this.setState({
-      displayContent: newState
-    })
+      displayContent: newState,
+    });
   }
 
   render() {
-
+    const {
+      desInfo,
+    } = this.props;
 
     return (
       <div className='company-description'>
         <h2 className='info-header' onClick={this.handleClick}>Overview</h2>
         <Collapse isOpened={this.state.displayContent}>
-          <div><b>Exchange:</b> {this.props.desInfo.exchange}</div>
-          <div><b>Industry:</b> {this.props.desInfo.industry}</div>
-          <div><b>Sector:</b> {this.props.desInfo.sector}</div>
-          <div><b>Website:</b> {this.props.desInfo.website}</div>
+          <div><b>Exchange:</b> {desInfo.exchange}</div>
+          <div><b>Industry:</b> {desInfo.industry}</div>
+          <div><b>Sector:</b> {desInfo.sector}</div>
+          <div><b>Website:</b> {desInfo.website}</div>
           <br></br>
-          <div>{this.props.desInfo.description}</div>
+          <div>{desInfo.description}</div>
           <br></br>
-          <div><b>CEO:</b> {this.props.desInfo.CEO}</div>
-          <div><b>Employees:</b> {this.props.desInfo.employees}</div>
+          <div><b>CEO:</b> {desInfo.CEO}</div>
+          <div><b>Employees:</b> {desInfo.employees}</div>
           <h3>Address:</h3>
-          <div>{this.props.desInfo.address}</div>
-          <div>{this.props.desInfo.city}, {this.props.desInfo.state}</div>
-          <div>{this.props.desInfo.zip} {this.props.desInfo.country}</div>
+          <div>{desInfo.address}</div>
+          <div>{desInfo.city}, {desInfo.state}</div>
+          <div>{desInfo.zip} {desInfo.country}</div>
           <br></br>
-          <div><b>Phone:</b> {this.props.desInfo.phone}</div>
+          <div><b>Phone:</b> {desInfo.phone}</div>
         </Collapse>
       </div>
 
@@ -50,5 +52,22 @@ class Descripton extends React.Component {
   }
 }
 
+Descripton.propTypes = {
+  desInfo: PropTypes.shape({
+    exchange: PropTypes.string,
+    industry: PropTypes.string,
+    sector: PropTypes.string,
+    description: PropTypes.string,
+    CEO: PropTypes.string,
+    employees: PropTypes.number,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    zip: PropTypes.string,
+    website: PropTypes.string,
+    state: PropTypes.string,
+    country: PropTypes.string,
+    phone: PropTypes.string,
+  }),
+};
 
 export default Descripton;

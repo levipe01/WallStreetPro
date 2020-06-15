@@ -1,5 +1,5 @@
 import React from 'react';
-import {Collapse} from 'react-collapse';
+import { Collapse } from 'react-collapse';
 import PropTypes from 'prop-types';
 
 class Earnings extends React.Component {
@@ -13,79 +13,82 @@ class Earnings extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(event){
+  handleClick(event) {
     event.preventDefault();
-    let newState = !this.state.displayContent
+    const newState = !this.state.displayContent;
     this.setState({
-      displayContent: newState
-    })
+      displayContent: newState,
+    });
   }
 
   render() {
+    const {
+      earnInfo,
+    } = this.props;
+
     return (
       <div className='company-earnings'>
         <h2 className='info-header' onClick={this.handleClick}>Earnings</h2>
         {
-          this.props.earnInfo.earnings
-            &&
-            <Collapse isOpened={this.state.displayContent}>
+          earnInfo.earnings
+            && <Collapse isOpened={this.state.displayContent}>
               <table cellSpacing="0" cellPadding="0" className='earnings-table'>
                 <tbody>
                   <tr>
                     <th></th>
-                    <th>{this.props.earnInfo.earnings[0].fiscalPeriod}</th>
-                    <th>{this.props.earnInfo.earnings[1].fiscalPeriod}</th>
-                    <th>{this.props.earnInfo.earnings[2].fiscalPeriod}</th>
-                    <th>{this.props.earnInfo.earnings[3].fiscalPeriod}</th>
+                    <th>{earnInfo.earnings[0].fiscalPeriod}</th>
+                    <th>{earnInfo.earnings[1].fiscalPeriod}</th>
+                    <th>{earnInfo.earnings[2].fiscalPeriod}</th>
+                    <th>{earnInfo.earnings[3].fiscalPeriod}</th>
                   </tr>
                   <tr>
                     <td>Actual EPS</td>
-                    <td>${this.props.earnInfo.earnings[0].actualEPS}</td>
-                    <td>${this.props.earnInfo.earnings[1].actualEPS}</td>
-                    <td>${this.props.earnInfo.earnings[2].actualEPS}</td>
-                    <td>${this.props.earnInfo.earnings[3].actualEPS}</td>
+                    <td>${earnInfo.earnings[0].actualEPS}</td>
+                    <td>${earnInfo.earnings[1].actualEPS}</td>
+                    <td>${earnInfo.earnings[2].actualEPS}</td>
+                    <td>${earnInfo.earnings[3].actualEPS}</td>
                   </tr>
                   <tr>
                     <td>Consensus EPS</td>
-                    <td>${this.props.earnInfo.earnings[0].consensusEPS}</td>
-                    <td>${this.props.earnInfo.earnings[1].consensusEPS}</td>
-                    <td>${this.props.earnInfo.earnings[2].consensusEPS}</td>
-                    <td>${this.props.earnInfo.earnings[3].consensusEPS}</td>
+                    <td>${earnInfo.earnings[0].consensusEPS}</td>
+                    <td>${earnInfo.earnings[1].consensusEPS}</td>
+                    <td>${earnInfo.earnings[2].consensusEPS}</td>
+                    <td>${earnInfo.earnings[3].consensusEPS}</td>
                   </tr>
                   <tr>
                     <td>Number of Estimates</td>
-                    <td>{this.props.earnInfo.earnings[0].numberOfEstimates}</td>
-                    <td>{this.props.earnInfo.earnings[1].numberOfEstimates}</td>
-                    <td>{this.props.earnInfo.earnings[2].numberOfEstimates}</td>
-                    <td>{this.props.earnInfo.earnings[3].numberOfEstimates}</td>
+                    <td>{earnInfo.earnings[0].numberOfEstimates}</td>
+                    <td>{earnInfo.earnings[1].numberOfEstimates}</td>
+                    <td>{earnInfo.earnings[2].numberOfEstimates}</td>
+                    <td>{earnInfo.earnings[3].numberOfEstimates}</td>
                   </tr>
                   <tr>
                     <td>Surprise Amount</td>
-                    <td>${this.props.earnInfo.earnings[0].EPSSurpriseDollar}</td>
-                    <td>${this.props.earnInfo.earnings[1].EPSSurpriseDollar}</td>
-                    <td>${this.props.earnInfo.earnings[2].EPSSurpriseDollar}</td>
-                    <td>${this.props.earnInfo.earnings[3].EPSSurpriseDollar}</td>
+                    <td>${earnInfo.earnings[0].EPSSurpriseDollar}</td>
+                    <td>${earnInfo.earnings[1].EPSSurpriseDollar}</td>
+                    <td>${earnInfo.earnings[2].EPSSurpriseDollar}</td>
+                    <td>${earnInfo.earnings[3].EPSSurpriseDollar}</td>
                   </tr>
                   <tr>
                     <td>Year Ago EPS</td>
-                    <td>${this.props.earnInfo.earnings[0].yearAgo}</td>
-                    <td>${this.props.earnInfo.earnings[1].yearAgo}</td>
-                    <td>${this.props.earnInfo.earnings[2].yearAgo}</td>
-                    <td>${this.props.earnInfo.earnings[3].yearAgo}</td>
+                    <td>${earnInfo.earnings[0].yearAgo}</td>
+                    <td>${earnInfo.earnings[1].yearAgo}</td>
+                    <td>${earnInfo.earnings[2].yearAgo}</td>
+                    <td>${earnInfo.earnings[3].yearAgo}</td>
                   </tr>
                   <tr>
                     <td>Year Ago Chng</td>
-                    <td>${this.props.earnInfo.earnings[0].yearAgoChangePercent}</td>
-                    <td>${this.props.earnInfo.earnings[1].yearAgoChangePercent}</td>
-                    <td>${this.props.earnInfo.earnings[2].yearAgoChangePercent}</td>
-                    <td>${this.props.earnInfo.earnings[3].yearAgoChangePercent}</td>
+                    <td>${earnInfo.earnings[0].yearAgoChangePercent}</td>
+                    <td>${earnInfo.earnings[1].yearAgoChangePercent}</td>
+                    <td>${earnInfo.earnings[2].yearAgoChangePercent}</td>
+                    <td>${earnInfo.earnings[3].yearAgoChangePercent}</td>
                   </tr>
                   <tr>
                     <td>Report Date</td>
-                    <td>{this.props.earnInfo.earnings[0].EPSReportDate}</td>
-                    <td>{this.props.earnInfo.earnings[1].EPSReportDate}</td>
-                    <td>{this.props.earnInfo.earnings[2].EPSReportDate}</td>
-                    <td>{this.props.earnInfo.earnings[3].EPSReportDate}</td>
+                    <td>{earnInfo.earnings[0].EPSReportDate}</td>
+                    <td>{earnInfo.earnings[1].EPSReportDate}</td>
+                    <td>{earnInfo.earnings[2].EPSReportDate}</td>
+                    <td>{earnInfo.earnings[3].EPSReportDate}</td>
                   </tr>
                 </tbody>
               </table>
@@ -96,5 +99,21 @@ class Earnings extends React.Component {
   }
 }
 
+Earnings.propTypes = {
+  earnInfo: PropTypes.shape({
+    earnings: PropTypes.arrayOf(
+      PropTypes.shape({
+        EPSReportDate: PropTypes.string,
+        yearAgoChangePercent: PropTypes.number,
+        yearAgo: PropTypes.number,
+        EPSSurpriseDollar: PropTypes.number,
+        fiscalPeriod: PropTypes.string,
+        numberOfEstimates: PropTypes.number,
+        consensusEPS: PropTypes.number,
+        actualEPS: PropTypes.number,
+      }),
+    ),
+  }),
+};
 
 export default Earnings;

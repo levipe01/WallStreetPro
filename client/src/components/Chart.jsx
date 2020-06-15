@@ -1,5 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
 
 
 class Chart extends React.Component {
@@ -16,52 +17,70 @@ class Chart extends React.Component {
   componentDidMount() {
     this.setState({
       isTemp: this.props.isTemp,
-    })
+    });
   }
 
   toggleIsTemp() {
-    const newIsTemp = !this.state.isTemp
+    const newIsTemp = !this.state.isTemp;
     if (this.state.isTemp) {
       this.setState({
-        isTemp: newIsTemp
-      })
+        isTemp: newIsTemp,
+      });
     }
   }
 
   render() {
-    const { chartData, cName, isMini, ticker, updateTicker, removeVisible, deleteSecurity, addSecurity, isTemp } = this.props;
+    const {
+      chartData,
+      cName,
+      isMini,
+      ticker,
+      updateTicker,
+      removeVisible,
+      deleteSecurity,
+      addSecurity,
+    } = this.props;
 
-    let xTicks = true, yGridLines = true, yTicks = true, fill = true;
-    let wrapperId = null, clickHandler = null, handleClick = null
-    let cardClassName, card_overlay_text, removeWrapperClassName = ''
+    let xTicks = true;
+    let yGridLines = true;
+    let yTicks = true;
+    let fill = true;
+    let wrapperId = null;
+    let clickHandler = null;
+    let handleClick = null;
+    let cardClassName = '';
+    let removeWrapperClassName = '';
     let headerFontSize = 25;
-    let lineColor = 'rgba(0,0,0,1)'
-    let pointBackgroundColor = '#fff'
+    let lineColor = 'rgba(0,0,0,1)';
+    let pointBackgroundColor = '#fff';
 
     if (isMini) {
-      xTicks = false, yGridLines = false, yTicks = false, fill = false;
-      wrapperId = chartData.ticker
-      clickHandler = (event) => { updateTicker(event.currentTarget.id) }
-      cardClassName = 'a-carousel-card'
+      xTicks = false;
+      yGridLines = false;
+      yTicks = false;
+      fill = false;
+      wrapperId = chartData.ticker;
+      clickHandler = (event) => { updateTicker(event.currentTarget.id); };
+      cardClassName = 'a-carousel-card';
       headerFontSize = 15;
-      pointBackgroundColor = 'rgba(75,192,192,1)'
+      pointBackgroundColor = 'rgba(75,192,192,1)';
 
-      let i = chartData.prices.length - 1
-      while (chartData.prices[i] === null) { i-- }
-      lineColor = (chartData.prices[0] < chartData.prices[i]) ? 'rgba(13,236,13,1)' : 'rgba(236,13,13,1)'
+      let i = chartData.prices.length - 1;
+      while (chartData.prices[i] === null) { i -= 1; }
+      lineColor = (chartData.prices[0] < chartData.prices[i]) ? 'rgba(13,236,13,1)' : 'rgba(236,13,13,1)';
 
       if (removeVisible) {
-        clickHandler = null
-        removeWrapperClassName = 'carousel-remove-wrapper'
-        handleClick = (e) => { deleteSecurity(String(e.currentTarget.id)) }
+        clickHandler = null;
+        removeWrapperClassName = 'carousel-remove-wrapper';
+        handleClick = (e) => { deleteSecurity(String(e.currentTarget.id)); };
       }
 
       if (this.state.isTemp) {
-        removeWrapperClassName = 'temp-card'
+        removeWrapperClassName = 'temp-card';
         handleClick = (e) => {
-          this.toggleIsTemp()
-          addSecurity(String(e.currentTarget.id))
-        }
+          this.toggleIsTemp();
+          addSecurity(String(e.currentTarget.id));
+        };
       }
     }
 
@@ -74,14 +93,14 @@ class Chart extends React.Component {
             datasets: [
               {
                 label: ticker || chartData.ticker,
-                fill: fill,
+                fill,
                 lineTension: 0,
                 backgroundColor: 'rgba(75,192,192,0.25)',
                 borderColor: lineColor,
                 borderWidth: 2,
                 data: chartData.prices,
                 pointBorderColor: 'rgba(75,192,192,1)',
-                pointBackgroundColor: pointBackgroundColor,
+                pointBackgroundColor,
                 pointBorderWidth: 0,
                 pointHoverRadius: 5,
                 pointHoverBackgroundColor: 'rgba(75,192,192,1)',
@@ -89,39 +108,39 @@ class Chart extends React.Component {
                 pointHoverBorderWidth: 2,
                 pointRadius: 0,
                 pointHitRadius: 10,
-              }
+              },
             ],
           }}
           options={{
-            title:{
+            title: {
               display: true,
               text: cName || chartData.cName,
               fontSize: headerFontSize,
               fontColor: 'black',
             },
             spanGaps: true,
-            legend:{
+            legend: {
               display: false,
             },
             scales: {
               xAxes: [{
-                  gridLines: {
-                      display: false
-                  },
-                  ticks: {
-                    display: xTicks
-                  }
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                  display: xTicks,
+                },
               }],
               yAxes: [{
                 gridLines: {
-                    display: yGridLines
+                  display: yGridLines,
                 },
                 ticks: {
-                  display: yTicks
-                }
-            }],
+                  display: yTicks,
+                },
+              }],
             },
-            scaleShowLabels: false
+            scaleShowLabels: false,
           }}
           />
           </div>
@@ -130,6 +149,25 @@ class Chart extends React.Component {
   }
 }
 
+Chart.propTypes = {
+  updateTicker: PropTypes.func,
+  deleteSecurity: PropTypes.func,
+  addSecurity: PropTypes.func,
+  chartData: PropTypes.shape({
+    cName: PropTypes.string,
+    ticker: PropTypes.string,
+    prices: PropTypes.arrayOf(
+      PropTypes.number,
+    ),
+    labels: PropTypes.arrayOf(
+      PropTypes.string,
+    ),
+  }),
+  isMini: PropTypes.bool,
+  removeVisible: PropTypes.bool,
+  isTemp: PropTypes.bool,
+  cName: PropTypes.string,
+  ticker: PropTypes.string,
+};
+
 export default Chart;
-
-
