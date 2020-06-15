@@ -108,8 +108,26 @@ button {
   text-align: center;
 }
 
+.header-grid {
+  /* position: fixed; */
+}
+
 .static-grid {
   display: flex;
+  width: 1300px;
+  margin: auto;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: rgb(245, 240, 240);
+}
+
+.collapse-grid {
+  display: flex;
+  width: 1300px;
+  margin: auto;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: rgb(245, 240, 240);
 }
 
 .chart-main {
@@ -252,10 +270,6 @@ button {
   height: 15px;
   background-position: -105px -7px;
   margin-left: 11px;
-}
-
-.collapse-grid {
-  display: flex;
 }
 
 .company-description {

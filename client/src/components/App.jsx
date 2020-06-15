@@ -123,6 +123,13 @@ class App extends React.Component {
 
     return axios.post('/data/watchlist/security', options)
       .then((res) => res)
+      .then(() => {
+        const newState = this.state.watchlistData;
+        newState.isTemp[0] = false;
+        this.setState({
+          watchlistData: newState,
+        });
+      })
       .catch((err) => err);
   }
 
@@ -189,10 +196,12 @@ class App extends React.Component {
   render() {
     return (
       <div className='master-grid'>
-        <Header getWatchlistData={this.getWatchlistData} getCurrentWatchlist={this.getCurrentWatchlist}
-         checkWatchlist={this.checkWatchlist} user_id={this.state.user_id} updateTicker={this.updateTicker}/>
-        <ChartCarousel updateTicker={this.updateTicker} addSecurity={this.addSecurity}
-        watchlistData={this.state.watchlistData} deleteSecurity={this.deleteSecurity}/>
+        <div className='header-grid'>
+          <Header getWatchlistData={this.getWatchlistData} getCurrentWatchlist={this.getCurrentWatchlist}
+          checkWatchlist={this.checkWatchlist} user_id={this.state.user_id} updateTicker={this.updateTicker}/>
+          <ChartCarousel updateTicker={this.updateTicker} addSecurity={this.addSecurity}
+          watchlistData={this.state.watchlistData} deleteSecurity={this.deleteSecurity}/>
+        </div>
 
         <div className='static-grid'>
           <div className='chart-main'>
@@ -205,10 +214,10 @@ class App extends React.Component {
           <Description desInfo={this.state.desInfo}/>
           <Earnings earnInfo={this.state.earnInfo}/>
         </div>
-        <div className='iex-cloud'>
-        <a href="https://iexcloud.io">Data provided by IEX Cloud</a>
-        </div>
 
+        <div className='iex-cloud'>
+          <a href="https://iexcloud.io">Data provided by IEX Cloud</a>
+        </div>
       </div>
     );
   }

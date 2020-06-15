@@ -114,7 +114,7 @@ class Chart extends React.Component {
           options={{
             title: {
               display: true,
-              text: cName || chartData.cName,
+              text: cName || chartData.cName || '',
               fontSize: headerFontSize,
               fontColor: 'black',
             },
