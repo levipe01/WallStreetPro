@@ -1,9 +1,9 @@
-# WallStreetPro - Similar Products Microservice
+# WallStreetPro 
 A financial data/information app with watchlist functionality
 
 
 ## Getting Started
-Clone this repository from by running: git clone https://github.com/levipe01/Shop_Smart_Products_Carousel.git
+Clone this repository from by running: git clone https://github.com/levipe01/WallStreetPro.git
 
 ## Prerequisites
 Node.js npm. 
