@@ -1,34 +1,33 @@
-# MVP Project
-
-> Project description
-
-App displaying financial information
-
-## Related Projects
+# WallStreetPro - Similar Products Microservice
+A financial data/information app with watchlist functionality
 
 
-## Table of Contents
+## Getting Started
+Clone this repository from by running: git clone https://github.com/levipe01/Shop_Smart_Products_Carousel.git
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+## Prerequisites
+Node.js npm. 
+PostgreSQL
 
-## Usage
+## Installing
+Install all dependencies. Seed database. Run server.
 
+npm run seed-db <br/>
+npm run server-dev <br/>
 npm run react-dev
-npm run server-dev
 
-## Requirements
+Navigate to http://localhost:3000 
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+## Built With
+PostgreSQL <br/>
+Express.js <br/>
+React <br/>
+Node.js <br/>
+Redis <br/>
+chart.js
 
-- Node 6.13.0
+## Authors
+Peter Levin - GitHub
 
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-npm install -g webpack
-npm install
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details
