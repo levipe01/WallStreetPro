@@ -1,16 +1,37 @@
 body {
   margin: 0px 20px;
+  min-width: 1200px;
 }
 
 p {
   margin: 0px;
 }
 
+table {
+  margin: auto;
+
+}
+.logo-wrapper {
+  text-align: center;
+  display: inline-flex;
+}
+
 h1 {
   padding: 15px 0px;
   margin: 0px;
-  text-align: center;
-  font-size: 60px;
+  font-size: 65px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 800;
+  background: -webkit-linear-gradient(rgb(125, 125, 240), rgba(116, 21, 116, 0.75));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo {
+  height: 58px;
+  width: 58px;
+  margin-top: 25px;
+  margin-right: 10px;
 }
 
 button {
@@ -44,11 +65,13 @@ button {
   padding: 45px 0px 30px 0px;
   font-size: 13px;
   height: 15px;
+  /* color: rgba(116, 21, 116, 0.75); */
 }
 
 .sign-up {
   text-decoration: underline;
   padding: 40px 40px;
+  /* color: rgba(116, 21, 116, 0.75); */
 }
 
 .sign-up:hover {
@@ -57,7 +80,7 @@ button {
 }
 
 .input-bar {
-  margin: 10px 0px;
+  padding: 10px 0px;
   display: flex;
   justify-content: space-around;
 }
@@ -68,17 +91,6 @@ button {
 }
 
 .index-prices {
-  text-align: center;
-  margin: 0px;
-}
-
-.watchlist-dropdown {
-  height: 21px;
-  width: 150px;
-  margin: 0px 5px;
-}
-
-.watchlist-update {
   text-align: center;
   margin: 0px;
 }
@@ -96,8 +108,26 @@ button {
   text-align: center;
 }
 
+.header-grid {
+  /* position: fixed; */
+}
+
 .static-grid {
   display: flex;
+  width: 1350px;
+  margin: auto;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: rgb(245, 240, 240);
+}
+
+.collapse-grid {
+  display: flex;
+  width: 1350px;
+  margin: auto;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: rgb(245, 240, 240);
 }
 
 .chart-main {
@@ -127,11 +157,10 @@ button {
   border-bottom: 1px solid;
   border-color: rgb(245, 240, 240);
   padding-bottom: 10px;
+  z-index: 1;
 }
 
 .a-carousel-card {
-  border: 1px 1px 1px 1px solid;
-  border-color: grey;
   font-family: "Amazon Ember", Arial;
   font-size: 13px;
   line-height: 19px;
@@ -145,6 +174,40 @@ button {
   display: inline-block;
   white-space: normal;
   letter-spacing: normal
+}
+
+.temp-card {
+  z-index: 100;
+  background-image: url(https://img.pngio.com/checkmark-clipart-endorsement-black-check-mark-transparent-check-mark-clipart-920_906.png);
+  background-size:160px 80px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 6px 0px;
+  top: 0;
+  left: inherit;
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 75%;
+}
+
+.carousel-remove-wrapper {
+  z-index: 100;
+  background-image: url(http://clipart-library.com/data_images/301654.png);
+  background-size: 160px 80px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 6px 0px;
+  top: 0;
+  left: inherit;
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 75%;
 }
 
 .carousel_button {
@@ -163,6 +226,12 @@ button {
   width: 40px;
   height: 100%;
   opacity: 50%;
+}
+
+.empty-carousel {
+  font-weight: 500;
+  font-size: 25px;
+  text-align: center;
 }
 
 .carousel_button:focus {
@@ -203,10 +272,6 @@ button {
   margin-left: 11px;
 }
 
-.collapse-grid {
-  display: flex;
-}
-
 .company-description {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -214,7 +279,7 @@ button {
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  width:50%;
+  width:60%;
   /* color: rgb(77, 75, 75); */
   margin: 5px;
 }
@@ -226,7 +291,7 @@ button {
   border-color: rgb(245, 240, 240);
   padding: 10px;
   box-shadow: 1px 1px rgb(245, 240, 240);
-  width:50%;
+  width:40%;
   /* color: rgb(77, 75, 75); */
   margin: 5px;
 }
@@ -263,7 +328,6 @@ button {
 .quote-table table {
   border-collapse: collapse;
   width: 100%;
-  margin-right: 0px;
 }
 
 .quote-table td, th {
@@ -292,6 +356,215 @@ button {
 .quote-time {
   font-size: 17px;
 }
+
+.iex-cloud a {
+  color: #4c4e50;
+}
+
+.iex-cloud a:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.iex-cloud{
+  text-align: center;
+  margin: auto;
+  width: 50%;
+}
+
+.page-nums {
+  padding-top: 10px;
+  color: black;
+  font-size: 13px;
+  text-rendering: optimizeLegibility;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  margin-right: 0!important;
+  text-align: right!important;
+  display: inline;
+}
+
+.start-over {
+  display: inline;
+}
+
+.so-button {
+  text-decoration: none;
+  color: #0066c0;
+  cursor: pointer;
+  font-size: 13px;
+  text-rendering: optimizeLegibility;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  display: inline;
+}
+
+.so-button:hover {
+  color:#c45500
+}
+
+.seperator {
+  font-size: 13px!important;
+  line-height: 19px!important;
+  text-align: right!important;
+  color: #111;
+  display: inline-block;
+  margin: -2px .67375em 0;
+  width: 1px;
+  background-color: #ddd;
+  line-height: 0;
+  height: 14px;
+  vertical-align: middle;
+}
+
+.footer-right {
+  width: 50%;
+  float: right;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.carousel-footer {
+  width: 100%;
+  display: inline-flex;
+}
+
+.footer-left {
+  float: left;
+  width: 50%;
+  margin-top: 10px;
+}
+
+.removeButton {
+  text-decoration: none;
+  padding: 0px;
+  /* line-height: 11px; */
+  margin: 0 0 0 2px;
+  display: inline-block;
+  /* background-size: 15px; */
+  color: #0066C0;
+  font-family: "Amazon Ember", arial;
+  font-size: 13px;
+  text-align: right;
+}
+
+.removeButton:hover {
+  /* background-size: 15px; */
+  color:#c45500;
+  outline:0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.edit-button {
+  margin: 0px 2.5px 0px 15px;
+}
+
+.delete-button {
+  margin: 0px 5px;
+}
+
+.plus-button {
+  margin: 7.5px 2.5px 0px 5px;
+}
+
+.create-new {
+  width: 100px;
+  margin: 0px 110px 0px 90px;
+}
+
+.watchlist-input {
+  margin: 2.5px 0px;
+  padding: 3px 0px;
+  width: 175px;
+  font-size: 16px;
+}
+
+.dropbtn {
+  width: 175px;
+  height: 20px;
+  border-radius: 3px;
+  border-color: #ADB1B8 #A2A6AC #8D9096;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: 500;
+  opacity: 75%;
+  color: black;
+  font-size: 16px;
+  height: 100%;
+}
+
+.dropdown {
+  margin: 0px;
+  z-index: 100;
+}
+
+.dropdown-content {
+  padding: 0px;
+  right: 0;
+  display: none;
+  margin: 0;
+  background-color: white;
+  width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+.wl-item-edit {
+  width: 70%;
+}
+
+.wl-item-edit:hover {
+  width: 70%;
+  cursor: text;
+}
+
+.wl-item-name {
+  width: 70%;
+}
+
+.wl-item-name:hover {
+  width: 70%;
+  cursor:  pointer;
+}
+
+.wl-item-buttons {
+  width: 30%;
+}
+
+.watchlist-item {
+  padding: 5px 0px 5px 5px;
+  border: solid 1px lightgrey;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  z-index: 100;
+}
+
+.watchlist-item:hover {
+  background-color: rgb(239, 240, 243);
+  padding: 5px 0px 5px 5px;
+  border: solid 1px lightgrey;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  z-index: 100;
+}
+
+.watchlist-list:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  margin: 0;
+  display: block;
+  position: absolute;
+  z-index: 100;
+}
+
+
+
+
+
+
 
 
 
