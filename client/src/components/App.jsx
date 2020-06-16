@@ -207,7 +207,7 @@ class App extends React.Component {
           <div className='chart-main'>
             <Chart chartData={this.state.chartData} ticker={this.state.ticker} cName={this.state.cName} isMini={false}/>
           </div>
-          <Quote quote={this.state.quote}/>
+          <Quote quote={this.state.quote} getQuote={this.getQuote}/>
         </div>
 
         <div className='collapse-grid'>

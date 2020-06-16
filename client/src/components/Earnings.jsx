@@ -56,7 +56,7 @@ class Earnings extends React.Component {
                     <td>${earnInfo.earnings[3].consensusEPS}</td>
                   </tr>
                   <tr>
-                    <td>Number of Estimates</td>
+                    <td># of Estimates</td>
                     <td>{earnInfo.earnings[0].numberOfEstimates}</td>
                     <td>{earnInfo.earnings[1].numberOfEstimates}</td>
                     <td>{earnInfo.earnings[2].numberOfEstimates}</td>
@@ -78,10 +78,10 @@ class Earnings extends React.Component {
                   </tr>
                   <tr>
                     <td>Year Ago Chng</td>
-                    <td>${earnInfo.earnings[0].yearAgoChangePercent}</td>
-                    <td>${earnInfo.earnings[1].yearAgoChangePercent}</td>
-                    <td>${earnInfo.earnings[2].yearAgoChangePercent}</td>
-                    <td>${earnInfo.earnings[3].yearAgoChangePercent}</td>
+                    <td>${earnInfo.earnings[0].yearAgoChangePercent.toFixed(2)}</td>
+                    <td>${earnInfo.earnings[1].yearAgoChangePercent.toFixed(2)}</td>
+                    <td>${earnInfo.earnings[2].yearAgoChangePercent.toFixed(2)}</td>
+                    <td>${earnInfo.earnings[3].yearAgoChangePercent.toFixed(2)}</td>
                   </tr>
                   <tr>
                     <td>Report Date</td>

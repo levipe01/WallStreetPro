@@ -54,7 +54,7 @@ class WatchlistItem extends React.Component {
     axios.put('/data/watchlist', options)
       .then(() => {
         this.toggleEditMode();
-        this.props.getWatchlists();
+        this.props.getWatchlists(this.state.watchlist_id);
       })
       .catch((err) => err);
   }
