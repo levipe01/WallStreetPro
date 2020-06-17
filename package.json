@@ -9,7 +9,8 @@
   "scripts": {
     "server-dev": "nodemon server/server.js",
     "react-dev": "webpack -d --watch",
-    "seed-db": "node database/seed_postgres.js"
+    "seed-db": "node database/seed_postgres.js",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
