@@ -1,6 +1,6 @@
 # WallStreetPro 
 A financial data/information app with watchlist functionality
-
+http://ec2-3-23-112-191.us-east-2.compute.amazonaws.com/
 
 ## Getting Started
 Clone this repository from by running: git clone https://github.com/levipe01/WallStreetPro.git
