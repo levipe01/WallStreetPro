@@ -29,5 +29,5 @@ chart.js
 ## Authors
 Peter Levin - GitHub
 
-## License
+## License - TEST2 - TEST3
 This project is licensed under the MIT License - see the LICENSE.md file for details
